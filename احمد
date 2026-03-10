@@ -1,0 +1,65 @@
+-- [[ AHMED HUB - ULTIMATE CUSTOM ]] --
+
+-- 1. تشغيل السكربت الأساسي
+task.spawn(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ook314745-svg/Brooki/refs/heads/main/obf_WUARKU60mdiDwIr4jcGVFs223sri6G0cPUtZ19JSap24AK6Js9gpiNVrCEghjCQ2.lua.txt"))()
+    end)
+end)
+
+-- 2. إعدادات الألوان (RGB)
+local RunService = game:GetService("RunService")
+local function getRGB()
+    return Color3.fromHSV(tick() % 5 / 5, 1, 1)
+end
+
+-- 3. إضافة الزر الجديد وتغيير الأسماء
+task.spawn(function()
+    while task.wait(1) do
+        local rainbowColor = getRGB()
+        
+        for _, v in pairs(game.CoreGui:GetDescendants()) do
+            -- أ: تبديل الأسماء فارس -> احمد
+            if v:IsA("TextLabel") or v:IsA("TextButton") then
+                if v.Text:find("فارس") or v.Text:find("FR") then
+                    v.Text = v.Text:gsub("فارس", "احمد"):gsub("FR HUB", "AHMED HUB"):gsub("FR", "AHMED")
+                    v.TextColor3 = rainbowColor
+                end
+            end
+            
+            -- ب: إضافة السكربت المطلوب داخل قائمة "سكربتات احمد"
+            if v:IsA("ScrollingFrame") and v.Parent.Name:lower():find("frame") then -- محاولة تحديد حاوية الأزرار
+                if not v:FindFirstChild("AhmedPrivateScript") then
+                    local NewBtn = Instance.new("TextButton")
+                    NewBtn.Name = "AhmedPrivateScript"
+                    NewBtn.Parent = v
+                    NewBtn.Size = UDim2.new(0.9, 0, 0, 40)
+                    NewBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+                    NewBtn.Text = "🚀 تشغيل سكربت احمد الخاص"
+                    NewBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    NewBtn.Font = Enum.Font.SourceSansBold
+                    NewBtn.TextSize = 18
+                    
+                    -- عند الضغط على الزر
+                    NewBtn.MouseButton1Click:Connect(function()
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/rafda995-boop/Ahmed-Hub-Brookhaven/main/script.lua"))()
+                        -- إشعار بسيط للتأكيد
+                        game:GetService("StarterGui"):SetCore("SendNotification", {
+                            Title = "Ahmed Hub",
+                            Text = "تم تشغيل السكربت بنجاح!",
+                            Duration = 5
+                        })
+                    end)
+                end
+            end
+        end
+        
+        -- ت: تعديل الاسم فوق الشخصية في الـ Workspace
+        for _, v in pairs(game.Workspace:GetDescendants()) do
+            if v:IsA("TextLabel") and (v.Text:find("FR") or v.Text:find("HERE")) then
+                v.Text = "سكربت احمد الخاص"
+                v.TextColor3 = rainbowColor
+            end
+        end
+    end
+end)
