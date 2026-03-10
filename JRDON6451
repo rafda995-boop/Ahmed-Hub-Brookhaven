@@ -1,0 +1,41 @@
+-- [[ AHMED HUB - JR VERSION ]] --
+-- FIXED BY AHMED (Taraf69788)
+-- KEY: VRV
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+
+-- Here starts the Key System Logic
+-- I have replaced the old key with "VRV" for you.
+
+local function startScript()
+    -- This is where the main script runs after key is correct
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ook314745-svg/Brooki/refs/heads/main/obf_WUARKU60mdiDwIr4jcGVFs223sri6G0cPUtZ19JSap24AK6Js9gpiNVrCEghjCQ2.lua.txt"))()
+end
+
+-- Key Button Logic (Fixed to VRV)
+confirmKey.MouseButton1Click:Connect(function()
+    if keyBox.Text == "VRV" then
+        keyFrame:Destroy()
+        startScript()
+    else
+        confirmKey.Text = "WRONG KEY! USE: VRV"
+        task.wait(2)
+        confirmKey.Text = "Confirm Key"
+    end
+end)
+
+-- Background Name Changer (Ahmed Hub)
+task.spawn(function()
+    while task.wait(1) do
+        for _, v in pairs(CoreGui:GetDescendants()) do
+            if v:IsA("TextLabel") or v:IsA("TextButton") then
+                if v.Text:find("JR") or v.Text:find("FR") then
+                    v.Text = v.Text:gsub("JR", "AHMED"):gsub("FR", "AHMED")
+                end
+            end
+        end
+    end
+end)
