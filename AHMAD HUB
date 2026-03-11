@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.016
-local intensity = 27000
+local intensity = 10000
 
 local function safeFireClick(detector, times)
     if not detector then return end
@@ -380,11 +380,13 @@ RPNameTextRemote:FireServer("RolePlayName", rpName)
 RPBioTextRemote:FireServer("RolePlayBio", rpBio)
 
 -- وظيفة تغيير الألوان المستمر (RGB) للواجهة والاسم والبايو
+local lastUpdate = 0
+
 RunService.RenderStepped:Connect(function()
     Tick = Tick + 0.01 
     local RGBColor = Color3.fromHSV(Tick % 1, 1, 1)
     
-    -- تطبيق الألوان على الواجهة
+    -- تحديث ألوان الواجهة (تعمل دائماً)
     keyFrame.BorderColor3 = RGBColor
     main.BorderColor3 = RGBColor
     keyBox.BorderColor3 = RGBColor
@@ -394,7 +396,10 @@ RunService.RenderStepped:Connect(function()
     title.TextColor3 = RGBColor
     keyTitle.TextColor3 = RGBColor
 
-    -- جعل الاسم والبايو RGB في اللعبة
-    RPNameColorRemote:FireServer("PickingRPNameColor", RGBColor)
-    RPBioColorRemote:FireServer("PickingRPBioColor", RGBColor)
+    -- تحديث لون الاسم والبايو كل 0.1 ثانية لضمان الاستجابة
+    if tick() - lastUpdate > 0.1 then
+        lastUpdate = tick()
+        RPNameColorRemote:FireServer("PickingRPNameColor", RGBColor)
+        RPBioColorRemote:FireServer("PickingRPBioColor", RGBColor)
+    end
 end)
