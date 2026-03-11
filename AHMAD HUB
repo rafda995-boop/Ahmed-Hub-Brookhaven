@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.001 -- تقليل الوقت لزيادة سرعة الهجوم
-local intensity = 300000 -- رفع القوة لتجميد أجهزة الأعداء
+local intensity = 130000 -- رفع القوة لتجميد أجهزة الأعداء
 
 local function safeFireClick(detector, times)
     if not detector then return end
