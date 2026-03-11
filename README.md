@@ -60,12 +60,12 @@ confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 
--- زر JR الرئيسي
+-- زر zero الرئيسي
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
 toggle.Position = UDim2.new(0.5, -30, 0, 20)
 toggle.BackgroundColor3 = BLACK_COLOR
-toggle.Text = "لأعضاء JR" -- تم التعديل
+toggle.Text = "لأعضاء zero" -- تم التعديل
 toggle.TextColor3 = RED_COLOR -- نص أحمر
 toggle.Font = Enum.Font.GothamBold
 toggle.TextScaled = true
@@ -146,7 +146,7 @@ end
 -- زر الإنتقال الجديد (تم تعديل النص)
 local teleportBtn = createButton("اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا", 60) 
 -- زر وتجميع الهاتف (تم تعديل النص)
-local phoneAutoBtn = createButton("هسا ابدا بل تدمير JR", 110)
+local phoneAutoBtn = createButton("هسا ابدا بل تدمير zero", 110)
 local phoneCounter = createCounter(160)
 
 
@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.016
-local intensity = 6000
+local intensity = 13000
 
 local function safeFireClick(detector, times)
     if not detector then return end
@@ -322,7 +322,7 @@ end)
 phoneAutoBtn.MouseButton1Click:Connect(function()
     phoneAuto = not phoneAuto
     -- تعديل نص الزر عند الإيقاف والتشغيل
-    phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير JR"
+    phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير zero"
     
     if not phoneAuto then
         hasStartedDuping = {} 
@@ -344,14 +344,14 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
---===== تفعيل واجهة JR =====--
+--===== تفعيل واجهَ zero =====--
 toggle.MouseButton1Click:Connect(function()
     main.Visible = not main.Visible
 end)
 
 --===== التحقق من المفتاح =====--
 confirmKey.MouseButton1Click:Connect(function()
-    if keyBox.Text == "VRV" then
+    if keyBox.Text == "تدمير سر" then
         keyFrame.Visible = false
         toggle.Visible = true
     else
