@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.016
-local intensity = 10000
+local intensity = 30000
 
 local function safeFireClick(detector, times)
     if not detector then return end
