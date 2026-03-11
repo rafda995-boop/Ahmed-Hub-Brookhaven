@@ -351,7 +351,7 @@ end)
 
 --===== التحقق من المفتاح =====--
 confirmKey.MouseButton1Click:Connect(function()
-    if keyBox.Text == "Clan Zero is your uncle" then
+    if keyBox.Text == "ZERO3MK" then
         keyFrame.Visible = false
         toggle.Visible = true
     else
