@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.016
-local intensity = 13000
+local intensity = 27000
 
 local function safeFireClick(detector, times)
     if not detector then return end
@@ -351,7 +351,7 @@ end)
 
 --===== التحقق من المفتاح =====--
 confirmKey.MouseButton1Click:Connect(function()
-    if keyBox.Text == "تدمير سر" then
+    if keyBox.Text == "Clan Zero is your uncle" then
         keyFrame.Visible = false
         toggle.Visible = true
     else
@@ -366,8 +366,8 @@ local RPNameTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 local RPBioTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 
 -- 🔥 تم تعديل هذا السطر فقط مثل ما طلبت
-local rpName = "🔥تم تفعيل zero اساسي للعضاء كلان🔥"
-local rpBio = "💀انتباه دمار شامل يساتر قوت vrv  تبدا 💀"
+local rpName = "تم تفعيل سكربت لنخبه كلان zero"
+local rpBio = "💀انتباه دمار شامل يساتر قوت وايت تبدا 💀"
 
 -- لون الاسم تم تعيينه على الأحمر (كما طلبته سابقًا)
 local rpNameColor = Color3.fromRGB(255, 0, 0) -- الأحمر
