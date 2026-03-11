@@ -229,14 +229,19 @@ end
 local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
-local interval = 0.016
-local intensity = 30000
+local interval = 0.001 -- تقليل الوقت لزيادة سرعة الهجوم
+local intensity = 300000 -- رفع القوة لتجميد أجهزة الأعداء
 
 local function safeFireClick(detector, times)
     if not detector then return end
-    if typeof(fireclickdetector) ~= "function" then return end
-    for i = 1, times do
-        pcall(function() fireclickdetector(detector) end)
+    -- فحص إذا كان نظام التشغيل يدعم الفاير كليك
+    local success, err = pcall(function()
+        for i = 1, times do
+            fireclickdetector(detector, 0)
+        end
+    end)
+    if not success then
+        warn("Error in fireclick: " .. tostring(err))
     end
 end
 
@@ -244,10 +249,16 @@ local function collectPhone()
     local phone = getPhone()
     local detector = phone and phone:FindFirstChildOfClass("ClickDetector")
     local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
     if phone and detector and root then
-        root.CFrame = phone.CFrame + Vector3.new(0, 2, 0)
-        safeFireClick(detector, intensity)
+        -- الانتقال لمكان الهاتف
+        root.CFrame = phone.CFrame + Vector3.new(0, 3, 0)
         
+        -- تنفيذ صدمة اللاق للأعداء (بقوة 300,000)
+        safeFireClick(detector, intensity)
+    end
+end
+
         local toolName = "Iphone" 
         local count = CountTool(toolName)
         if count > 0 and not hasStartedDuping[toolName] then
