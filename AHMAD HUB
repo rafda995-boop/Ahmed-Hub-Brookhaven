@@ -246,7 +246,6 @@ local function safeFireClick(detector, times)
 end
 
 local function collectPhone()
-    local phone = getPhone()
     local detector = phone and phone:FindFirstChildOfClass("ClickDetector")
     local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     
