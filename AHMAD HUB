@@ -366,8 +366,8 @@ local RPNameTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 local RPBioTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 
 -- 🔥 تم تعديل هذا السطر فقط مثل ما طلبت
-local rpName = "تم تفعيل سكربت لنخبه كلان zero"
-local rpBio = "💀انتباه دمار شامل يساتر قوت وايت تبدا 💀"
+local rpName = "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗہیۣۗہلۣۗہ سۣۗہكۣۗہرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆"
+local rpBio = "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺"
 
 -- لون الاسم تم تعيينه على الأحمر (كما طلبته سابقًا)
 local rpNameColor = Color3.fromRGB(255, 0, 0) -- الأحمر
