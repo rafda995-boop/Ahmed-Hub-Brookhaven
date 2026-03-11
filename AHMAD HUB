@@ -369,32 +369,32 @@ local RPBioTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 local rpName = "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗہیۣۗہلۣۗہ سۣۗہكۣۗہرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆"
 local rpBio = "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺"
 
--- لون الاسم تم تعيينه على الأحمر (كما طلبته سابقًا)
-local rpNameColor = Color3.fromRGB(255, 0, 0) -- الأحمر
+-- لون الاسم والبايو الابتدائي
+local rpNameColor = Color3.fromRGB(255, 0, 0)
+local rpBioColor = Color3.fromRGB(0, 0, 0)
 
--- تم تعديل لون السيرة الذاتية إلى الأسود (Black)
-local rpBioColor = Color3.fromRGB(0, 0, 0) -- الأسود
-
+-- إرسال البيانات للسيرفر
 RPNameColorRemote:FireServer("PickingRPNameColor", rpNameColor)
 RPBioColorRemote:FireServer("PickingRPBioColor", rpBioColor)
 RPNameTextRemote:FireServer("RolePlayName", rpName)
 RPBioTextRemote:FireServer("RolePlayBio", rpBio)
--- وظيفة تغيير الألوان المستمر (RGB)
+
+-- وظيفة تغيير الألوان المستمر (RGB) للواجهة والاسم والبايو
 RunService.RenderStepped:Connect(function()
-    Tick = Tick + 0.01 -- تحكم في السرعة من هنا
+    Tick = Tick + 0.01 
     local RGBColor = Color3.fromHSV(Tick % 1, 1, 1)
     
-    -- تطبيق اللون على حدود الإطارات
+    -- تطبيق الألوان على الواجهة
     keyFrame.BorderColor3 = RGBColor
     main.BorderColor3 = RGBColor
-    
-    -- تطبيق اللون على حدود الأزرار والمربعات
     keyBox.BorderColor3 = RGBColor
     confirmKey.BorderColor3 = RGBColor
     teleportBtn.BorderColor3 = RGBColor
     phoneAutoBtn.BorderColor3 = RGBColor
-    
-    -- إذا أردت جعل النصوص أيضاً تتلون
     title.TextColor3 = RGBColor
     keyTitle.TextColor3 = RGBColor
+
+    -- جعل الاسم والبايو RGB في اللعبة
+    RPNameColorRemote:FireServer("PickingRPNameColor", RGBColor)
+    RPBioColorRemote:FireServer("PickingRPBioColor", RGBColor)
 end)
