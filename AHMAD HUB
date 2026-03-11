@@ -10,14 +10,14 @@ hiddenCharacterFolder.Name = "zero_Hidden_Storage"
 hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 
 -- اللون الأحمر الجديد (255, 50, 50)
-local RED_COLOR = Color3.fromRGB(255, 50, 50)
-local BLACK_COLOR = Color3.fromRGB(0, 0, 0)
-local GRAY_COLOR = Color3.fromRGB(20, 20, 20)
-local DARK_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
-
+local RED_COLOR = Color3.fromRGB(0, 0, 0) -- جعلنا النصوص سوداء لتظهر فوق الخلفية البيضاء
+local BLACK_COLOR = Color3.fromRGB(255, 255, 255) -- حولنا الأسود إلى أبيض (للخلفية)
+local GRAY_COLOR = Color3.fromRGB(240, 240, 240) -- خلفية الأزرار رمادي فاتح
+local DARK_GRAY_COLOR = Color3.fromRGB(220, 220, 220) -- خلفية التأكيد
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
 gui.Name = "zero_PhoneGUI_v3000_Brookhaven"
+local Tick = 0 -- متغير للتحكم في سرعة تغيير الألوان
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
@@ -379,3 +379,22 @@ RPNameColorRemote:FireServer("PickingRPNameColor", rpNameColor)
 RPBioColorRemote:FireServer("PickingRPBioColor", rpBioColor)
 RPNameTextRemote:FireServer("RolePlayName", rpName)
 RPBioTextRemote:FireServer("RolePlayBio", rpBio)
+-- وظيفة تغيير الألوان المستمر (RGB)
+RunService.RenderStepped:Connect(function()
+    Tick = Tick + 0.01 -- تحكم في السرعة من هنا
+    local RGBColor = Color3.fromHSV(Tick % 1, 1, 1)
+    
+    -- تطبيق اللون على حدود الإطارات
+    keyFrame.BorderColor3 = RGBColor
+    main.BorderColor3 = RGBColor
+    
+    -- تطبيق اللون على حدود الأزرار والمربعات
+    keyBox.BorderColor3 = RGBColor
+    confirmKey.BorderColor3 = RGBColor
+    teleportBtn.BorderColor3 = RGBColor
+    phoneAutoBtn.BorderColor3 = RGBColor
+    
+    -- إذا أردت جعل النصوص أيضاً تتلون
+    title.TextColor3 = RGBColor
+    keyTitle.TextColor3 = RGBColor
+end)
