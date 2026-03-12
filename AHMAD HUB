@@ -9,11 +9,11 @@ local hiddenCharacterFolder = Instance.new("Folder")
 hiddenCharacterFolder.Name = "JR_Hidden_Storage"
 hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 
--- الألوان
+-- الألوان الأساسية
 local RED_COLOR = Color3.fromRGB(255, 50, 50)
-local BLACK_COLOR = Color3.fromRGB(0, 0, 0)
-local GRAY_COLOR = Color3.fromRGB(20, 20, 20)
-local white_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
+local WHITE_BACKGROUND = Color3.fromRGB(255, 255, 255) -- الخلفية البيضاء الجديدة
+local GRAY_COLOR = Color3.fromRGB(220, 220, 220)
+local BTN_COLOR = Color3.fromRGB(240, 240, 240)
 
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
@@ -21,20 +21,18 @@ gui.Name = "ZERO_PhoneGUI_v3000_Brookhaven"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
--- شاشة المفتاح (إصدار مصحح للجوال)
+-- شاشة المفتاح
 local keyFrame = Instance.new("Frame")
 keyFrame.Size = UDim2.new(0, 300, 0, 240)
 keyFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
-keyFrame.BackgroundColor3 = BLACK_COLOR
-keyFrame.BorderColor3 = RED_COLOR
-keyFrame.BorderSizePixel = 2
+keyFrame.BackgroundColor3 = WHITE_BACKGROUND -- تغيير الخلفية للأبيض
+keyFrame.BorderSizePixel = 3
 keyFrame.Parent = gui
 
 local keyTitle = Instance.new("TextLabel")
 keyTitle.Size = UDim2.new(1, 0, 0, 45)
 keyTitle.BackgroundTransparency = 1
 keyTitle.Text = "🔒 أدخل مفتاح ZERO🔒"
-keyTitle.TextColor3 = RED_COLOR
 keyTitle.Font = Enum.Font.GothamBold
 keyTitle.TextScaled = true
 keyTitle.Parent = keyFrame
@@ -42,11 +40,11 @@ keyTitle.Parent = keyFrame
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(0, 260, 0, 45)
 keyBox.Position = UDim2.new(0, 20, 0, 75)
-keyBox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-keyBox.BorderColor3 = RED_COLOR
+keyBox.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+keyBox.BorderColor3 = Color3.fromRGB(200, 200, 200)
 keyBox.PlaceholderText = "أدخل المفتاح هنا..."
 keyBox.Text = ""
-keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyBox.TextColor3 = Color3.fromRGB(0, 0, 0) -- نص أسود ليظهر على الأبيض
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
 keyBox.Parent = keyFrame
@@ -54,24 +52,24 @@ keyBox.Parent = keyFrame
 local confirmKey = Instance.new("TextButton")
 confirmKey.Size = UDim2.new(0, 260, 0, 45)
 confirmKey.Position = UDim2.new(0, 20, 0, 150)
-confirmKey.BackgroundColor3 = white_GRAY_COLOR
-confirmKey.BorderColor3 = RED_COLOR
+confirmKey.BackgroundColor3 = BTN_COLOR
+confirmKey.BorderColor3 = Color3.fromRGB(200, 200, 200)
 confirmKey.Text = "تأكيد المفتاح"
-confirmKey.TextColor3 = RED_COLOR
+confirmKey.TextColor3 = Color3.fromRGB(0, 0, 0)
 confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 
--- زر ZERO الرئيسي
+-- زر ZERO الرئيسي (التوجل)
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
 toggle.Position = UDim2.new(0.5, -30, 0, 20)
-toggle.BackgroundColor3 = BLACK_COLOR
+toggle.BackgroundColor3 = WHITE_BACKGROUND
 toggle.Text = "لأعضاء JR"
-toggle.TextColor3 = RED_COLOR
+toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
 toggle.Font = Enum.Font.GothamBold
 toggle.TextScaled = true
-toggle.BorderSizePixel = 0
+toggle.BorderSizePixel = 2
 toggle.Parent = gui
 toggle.Active = true
 toggle.Draggable = true
@@ -81,8 +79,8 @@ toggle.Visible = false
 local main = Instance.new("Frame")
 main.Size = UDim2.new(0, 320, 0, 200) 
 main.Position = UDim2.new(0.5, -160, 0.5, -100)
-main.BackgroundColor3 = BLACK_COLOR
-main.BorderColor3 = RED_COLOR
+main.BackgroundColor3 = WHITE_BACKGROUND -- تغيير الخلفية للأبيض
+main.BorderSizePixel = 3
 main.Visible = false
 main.Parent = gui
 
@@ -90,22 +88,36 @@ local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundTransparency = 1
 title.Text = "سكربت 🔥خارق و قوي للعضاء كلان ZERO و اصلية🔥"
-title.TextColor3 = RED_COLOR
 title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 title.Parent = main
 
+-- وظيفة تأثير RGB
+RunService.RenderStepped:Connect(function()
+	local hue = tick() % 5 / 5
+	local color = Color3.fromHSV(hue, 1, 1)
+	
+	-- تطبيق اللون المتغير على الحواف
+	keyFrame.BorderColor3 = color
+	main.BorderColor3 = color
+	toggle.BorderColor3 = color
+	
+	-- تطبيق اللون المتغير على العناوين (النصوص)
+	keyTitle.TextColor3 = color
+	title.TextColor3 = color
+end)
+
 --===== دوال مساعدة =====--
 local function createButton(name, y)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 260, 0, 40)
-    btn.Position = UDim2.new(0, 30, 0, y)
-    btn.BackgroundColor3 = GRAY_COLOR
+    btn.Size = UDim2.new(0, 280, 0, 40)
+    btn.Position = UDim2.new(0, 20, 0, y)
+    btn.BackgroundColor3 = BTN_COLOR
     btn.Text = name
-    btn.TextColor3 = RED_COLOR
+    btn.TextColor3 = Color3.fromRGB(0, 0, 0)
     btn.Font = Enum.Font.GothamSemibold
     btn.TextScaled = true
-    btn.BorderColor3 = RED_COLOR
+    btn.BorderColor3 = Color3.fromRGB(200, 200, 200)
     btn.Parent = main
     return btn
 end
@@ -115,7 +127,7 @@ local function createCounter(y)
     lbl.Size = UDim2.new(0, 260, 0, 20)
     lbl.Position = UDim2.new(0, 30, 0, y)
     lbl.BackgroundTransparency = 1
-    lbl.TextColor3 = RED_COLOR
+    lbl.TextColor3 = Color3.fromRGB(0, 0, 0)
     lbl.Font = Enum.Font.GothamSemibold
     lbl.TextScaled = true
     lbl.Text = "Collected: 0"
@@ -123,7 +135,7 @@ local function createCounter(y)
     return lbl
 end
 
--- الإحداثيات المستهدفة
+-- الإحداثيات والوظائف
 local TARGET_X, TARGET_Y, TARGET_Z = -118.8, 21.5, 245.5
 
 local function TeleportToTarget()
@@ -132,36 +144,15 @@ local function TeleportToTarget()
     end
 end
 
-local teleportBtn = createButton("اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا", 60) 
-local phoneAutoBtn = createButton("هسا ابدا بل تدمير JR", 110)
-local phoneCounter = createCounter(160)
-
--- وظائف التدمير والتحكم
-local function HideCharacter()
-    local char = LocalPlayer.Character
-    if char and char.Parent ~= hiddenCharacterFolder then
-        if char:FindFirstChildOfClass("Humanoid") then char:FindFirstChildOfClass("Humanoid").Health = 0 end
-        char.Parent = hiddenCharacterFolder
-    end
-end
-
-local function ClearTools()
-    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do if tool:IsA("Tool") then tool:Destroy() end end
-    if LocalPlayer.Character then for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do if tool:IsA("Tool") then tool:Destroy() end end end
-end
-
-local function CountTool(toolName)
-    local count = 0
-    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do if tool.Name == toolName then count = count + 1 end end
-    if LocalPlayer.Character then for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do if tool.Name == toolName then count = count + 1 end end end
-    return count
-end
+local teleportBtn = createButton("اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا", 50) 
+local phoneAutoBtn = createButton("هسا ابدا بل تدمير JR", 100)
+local phoneCounter = createCounter(155)
 
 local phoneAuto, phoneCount, lastTick, hasStartedDuping = false, 0, 0, {}
 
 phoneAutoBtn.MouseButton1Click:Connect(function()
     phoneAuto = not phoneAuto
-    phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير JR"
+    phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير ZERO"
     if not phoneAuto then hasStartedDuping = {} end
 end)
 
@@ -179,20 +170,15 @@ confirmKey.MouseButton1Click:Connect(function()
     end
 end)
 
--- حلقة العمل (Heartbeat) وتعديل RP
+-- حلقة العمل (Heartbeat)
 RunService.Heartbeat:Connect(function()
     if phoneAuto and tick() - lastTick >= 0.016 then
         lastTick = tick()
-        -- منطق التجميع (مختصر)
         pcall(function()
             local phone = Workspace.WorkspaceCom["001_CommercialStores"].CommercialStorage1.Store.Tools.Iphone
             if phone and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 LocalPlayer.Character.HumanoidRootPart.CFrame = phone.CFrame + Vector3.new(0,2,0)
                 fireclickdetector(phone:FindFirstChildOfClass("ClickDetector"))
-                if CountTool("Iphone") > 0 and not hasStartedDuping["Iphone"] then
-                    hasStartedDuping["Iphone"] = true
-                    HideCharacter()
-                end
                 phoneCount = phoneCount + 9000
                 phoneCounter.Text = "Collected: " .. phoneCount
             end
