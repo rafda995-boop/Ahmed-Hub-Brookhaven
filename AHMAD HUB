@@ -49,14 +49,16 @@ keyTitle.Parent = keyFrame
 
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(0, 240, 0, 45)
-keyBox.Position = UDim2.new(0, 30, 0, 70)
-keyBox.BackgroundColor3 = GRAY_COLOR
+keyBox.Position = UDim2.new(0, 30, 0, 75)
+keyBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- لون رمادي واضح
 keyBox.BorderColor3 = RED_COLOR
 keyBox.PlaceholderText = "اكتب الكود هنا..."
 keyBox.Text = "" 
+keyBox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
 keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
+keyBox.ZIndex = 10 -- يضمن ظهوره فوق الخلفية السوداء
 keyBox.Parent = keyFrame
 
 local confirmKey = Instance.new("TextButton")
