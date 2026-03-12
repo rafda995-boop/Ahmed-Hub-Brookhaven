@@ -1,0 +1,76 @@
+-- [[ 💀 ZERO PHONE AUTO | STOP FIX 💀 ]] --
+-- تم إصلاح مشكلة الإيقاف فقط - الأداء والقوة كما هي
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
+-- إعدادات القوة القصوى (لم يتم تغييرها)
+local intensity = 2500 
+local phoneAuto = false
+
+-- البحث عن الهاتف
+local function findIphone()
+    for _, v in pairs(Workspace:GetDescendants()) do
+        if v.Name == "Iphone" and v:FindFirstChildOfClass("ClickDetector") then
+            return v
+        end
+    end
+    return nil
+end
+
+-- وظيفة التدمير
+local function collectPhone()
+    -- التحقق من أن وضع التلقائي يعمل، إذا كان خطأ (false) يخرج فوراً ولا يسحب
+    if not phoneAuto then return end
+    
+    local phone = findIphone()
+    local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    if phone and root then
+        if (root.Position - phone.Position).Magnitude < 20 then
+            local detector = phone:FindFirstChildOfClass("ClickDetector")
+            if detector then
+                for i = 1, intensity do
+                    -- زيادة التحقق لضمان التوقف الفوري حتى داخل التكرار
+                    if not phoneAuto then break end 
+                    fireclickdetector(detector, 0)
+                end
+            end
+        else
+            root.CFrame = phone.CFrame + Vector3.new(0, 2, 0)
+        end
+    end
+end
+
+-- الواجهة
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local btn = Instance.new("TextButton", gui)
+btn.Size = UDim2.new(0, 200, 0, 50)
+btn.Position = UDim2.new(0.5, -100, 0.1, 0)
+btn.Text = "ابدأ تدمير ZERO"
+btn.BackgroundColor3 = Color3.new(1, 0, 0)
+btn.TextColor3 = Color3.new(1, 1, 1)
+
+btn.MouseButton1Click:Connect(function()
+    phoneAuto = not phoneAuto -- تغيير الحالة بين تشغيل وإيقاف
+    btn.Text = phoneAuto and "🛑 توقف" or "ابدأ تدمير ZERO"
+end)
+
+-- الحلقة الأساسية
+RunService.Heartbeat:Connect(function()
+    if phoneAuto then
+        collectPhone()
+    end
+end)
+
+-- تنظيف الحقيبة (لم يتم تغييره)
+task.spawn(function()
+    while true do
+        if phoneAuto then
+            LocalPlayer.Backpack:ClearAllChildren()
+        end
+        task.wait(1)
+    end
+end)
