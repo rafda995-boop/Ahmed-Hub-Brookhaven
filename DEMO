@@ -1,59 +1,30 @@
 --[[
-    Script Name: Ahmed Hub | Taraf69788 Edition
-    Version: V2.5 (2026)
-    Developer: Taraf69788
-    Community: Clan ZERO / VOID
-    Description: Private Brookhaven Script
+    Ahmed Hub | Taraf69788 Edition
+    حقوق التطوير لـ Ahmed (Taraf69788)
 ]]
 
--- استدعاء المكتبة (تأكد من أن الرابط يعمل)
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/7650-6750/Vv/main/Vv"))()
-local Window = Library:CreateWindow("Ahmed Hub | VOID", Vector2.new(480, 360), Enum.KeyCode.RightControl)
+-- استخدام مكتبة Kavo المستقرة جداً
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Ahmed Hub | Brookhaven", "BloodTheme") -- يمكنك تغيير اللون هنا
 
--- القوائم الرئيسية
-local MainTab = Window:CreateTab("الرئيسية")
-local PlayerTab = Window:CreateTab("اللاعب")
-local FunTab = Window:CreateTab("ميزات مضحكة")
+-- القوائم
+local Main = Window:NewTab("الرئيسية")
+local Section = Main:NewSection("مرحباً بك Taraf69788")
 
---- [ قسم الترحيب والألوان ] ---
-local WelcomeLabel = MainTab:CreateLabel("Welcome, Taraf69788")
-spawn(function()
-    while wait() do
-        local Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
-        WelcomeLabel:UpdateColor(Color) -- ميزة RGB التي تفضلها
-    end
+Section:NewButton("سرعة اللاعب (Speed 100)", "يجعل سرعتك 100", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
 end)
 
-MainTab:CreateButton("تدمير الواجهة", function()
-    Library:Close()
+Section:NewButton("قفزة عالية (Jump 100)", "يزيد قوة القفز", function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
 end)
 
---- [ قسم اللاعب - Player ] ---
-PlayerTab:CreateSlider("السرعة (Speed)", 16, 300, function(s)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-end)
+local Teleport = Window:NewTab("انتقالات")
+local TeleSection = Teleport:NewSection("أماكن Brookhaven")
 
-PlayerTab:CreateSlider("القفز (Jump)", 50, 500, function(j)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
-end)
-
-PlayerTab:CreateButton("طيران (Fly)", function()
-    -- هنا يمكنك وضع كود الطيران المفضل لديك
-    Library:Notify("Fly Mode Activated", 3)
-end)
-
---- [ قسم ميزات Brookhaven ] ---
-local BH_Tab = Window:CreateTab("Brookhaven Mods")
-
-BH_Tab:CreateButton("سرقة البنك (Teleport to Vault)", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-420, 23, 11) -- إحداثيات تقريبية للبنك
-    Library:Notify("تم الانتقال إلى الخزنة", 2)
-end)
-
-BH_Tab:CreateButton("فتح جميع الأبواب", function()
-    -- كود برمجي بسيط للتفاعل مع الأبواب القريبة
-    Library:Notify("جاري محاولة فتح الأبواب...", 3)
+TeleSection:NewButton("انتقال إلى البنك", "Teleport to Bank", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-420, 23, 11)
 end)
 
 -- إشعار عند التشغيل
-Library:Notify("Ahmed Hub: تم التشغيل بنجاح، استمتع يا taraf69788", 5)
+print("Ahmed Hub Loaded Successfully!")
