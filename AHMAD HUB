@@ -1,4 +1,4 @@
--- 💀 JR Phone Auto + Advanced Anti-Lag (Brookhaven Edition) 💀
+-- 💀 ZERO Phone Auto + Advanced Anti-Lag (Brookhaven Edition) 💀
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
@@ -13,11 +13,11 @@ hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 local RED_COLOR = Color3.fromRGB(255, 50, 50)
 local BLACK_COLOR = Color3.fromRGB(0, 0, 0)
 local GRAY_COLOR = Color3.fromRGB(20, 20, 20)
-local DARK_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
+local white_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
 
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
-gui.Name = "JR_PhoneGUI_v3000_Brookhaven"
+gui.Name = "ZERO_PhoneGUI_v3000_Brookhaven"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
@@ -32,7 +32,7 @@ keyFrame.Parent = gui
 local keyTitle = Instance.new("TextLabel")
 keyTitle.Size = UDim2.new(1, 0, 0, 40)
 keyTitle.BackgroundTransparency = 1
-keyTitle.Text = "🔒 أدخل مفتاح JR 🔒"
+keyTitle.Text = "🔒 أدخل مفتاح ZERO🔒"
 keyTitle.TextColor3 = RED_COLOR -- نص أحمر
 keyTitle.Font = Enum.Font.GothamBold
 keyTitle.TextScaled = true
@@ -60,7 +60,7 @@ confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 
--- زر JR الرئيسي
+-- زر ZERO الرئيسي
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
 toggle.Position = UDim2.new(0.5, -30, 0, 20)
@@ -87,7 +87,7 @@ main.Parent = gui
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundTransparency = 1
-title.Text = "سكربت 🔥خارق و قوي للعضاء كلان JR و اصلية🔥" -- تم التعديل
+title.Text = "سكربت 🔥خارق و قوي للعضاء كلان ZERO و اصلية🔥" -- تم صنع سكربت لكلان
 title.TextColor3 = RED_COLOR -- نص أحمر
 title.Font = Enum.Font.GothamBold
 title.TextScaled = true
@@ -230,7 +230,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.016
-local intensity = 2000
+local intensity = 9000
 
 local function safeFireClick(detector, times)
     if not detector then return end
@@ -344,7 +344,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
---===== تفعيل واجهة JR =====--
+--===== تفعيل واجهة ZERO =====--
 toggle.MouseButton1Click:Connect(function()
     main.Visible = not main.Visible
 end)
@@ -366,8 +366,8 @@ local RPNameTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 local RPBioTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 
 -- 🔥 تم تعديل هذا السطر فقط مثل ما طلبت
-local rpName = "🔥تم تفعيل JR اساسي للعضاء كلان🔥"
-local rpBio = "💀انتباه دمار شامل يساتر قوت JR  تبدا 💀"
+local rpName = "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺"
+local rpBio = "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗہیۣۗہلۣۗہ سۣۗہكۣۗہرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆"
 
 -- لون الاسم تم تعيينه على الأحمر (كما طلبته سابقًا)
 local rpNameColor = Color3.fromRGB(255, 0, 0) -- الأحمر
