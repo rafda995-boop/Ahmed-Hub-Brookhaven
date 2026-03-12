@@ -4,20 +4,17 @@ local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
--- مجلد التخزين المؤقت للشخصية
+-- مجلد التخزين المؤقت
 local hiddenCharacterFolder = Instance.new("Folder")
-hiddenCharacterFolder.Name = "JR_Hidden_Storage"
+hiddenCharacterFolder.Name = "ZERO_Hidden_Storage"
 hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 
 -- الألوان الأساسية
-local RED_COLOR = Color3.fromRGB(255, 50, 50)
-local WHITE_BACKGROUND = Color3.fromRGB(255, 255, 255) -- الخلفية البيضاء الجديدة
-local GRAY_COLOR = Color3.fromRGB(220, 220, 220)
-local BTN_COLOR = Color3.fromRGB(240, 240, 240)
+local WHITE_BACKGROUND = Color3.fromRGB(255, 255, 255) -- أبيض صريح
 
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
-gui.Name = "ZERO_PhoneGUI_v3000_Brookhaven"
+gui.Name = "ZERO_PhoneGUI_v4000"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
@@ -25,8 +22,8 @@ gui.Parent = game.CoreGui
 local keyFrame = Instance.new("Frame")
 keyFrame.Size = UDim2.new(0, 300, 0, 240)
 keyFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
-keyFrame.BackgroundColor3 = WHITE_BACKGROUND -- تغيير الخلفية للأبيض
-keyFrame.BorderSizePixel = 3
+keyFrame.BackgroundColor3 = WHITE_BACKGROUND -- إجبار اللون الأبيض
+keyFrame.BorderSizePixel = 4 -- جعل الحواف أعرض لتظهر ألوان RGB
 keyFrame.Parent = gui
 
 local keyTitle = Instance.new("TextLabel")
@@ -40,11 +37,9 @@ keyTitle.Parent = keyFrame
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(0, 260, 0, 45)
 keyBox.Position = UDim2.new(0, 20, 0, 75)
-keyBox.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
-keyBox.BorderColor3 = Color3.fromRGB(200, 200, 200)
-keyBox.PlaceholderText = "أدخل المفتاح هنا..."
+keyBox.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
 keyBox.Text = ""
-keyBox.TextColor3 = Color3.fromRGB(0, 0, 0) -- نص أسود ليظهر على الأبيض
+keyBox.TextColor3 = Color3.fromRGB(0, 0, 0) -- نص أسود
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
 keyBox.Parent = keyFrame
@@ -52,35 +47,19 @@ keyBox.Parent = keyFrame
 local confirmKey = Instance.new("TextButton")
 confirmKey.Size = UDim2.new(0, 260, 0, 45)
 confirmKey.Position = UDim2.new(0, 20, 0, 150)
-confirmKey.BackgroundColor3 = BTN_COLOR
-confirmKey.BorderColor3 = Color3.fromRGB(200, 200, 200)
+confirmKey.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
 confirmKey.Text = "تأكيد المفتاح"
 confirmKey.TextColor3 = Color3.fromRGB(0, 0, 0)
 confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 
--- زر ZERO الرئيسي (التوجل)
-local toggle = Instance.new("TextButton")
-toggle.Size = UDim2.new(0, 60, 0, 60)
-toggle.Position = UDim2.new(0.5, -30, 0, 20)
-toggle.BackgroundColor3 = WHITE_BACKGROUND
-toggle.Text = "لأعضاء JR"
-toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
-toggle.Font = Enum.Font.GothamBold
-toggle.TextScaled = true
-toggle.BorderSizePixel = 2
-toggle.Parent = gui
-toggle.Active = true
-toggle.Draggable = true
-toggle.Visible = false
-
--- الإطار الرئيسي
+-- الإطار الرئيسي (Main UI)
 local main = Instance.new("Frame")
 main.Size = UDim2.new(0, 320, 0, 200) 
 main.Position = UDim2.new(0.5, -160, 0.5, -100)
-main.BackgroundColor3 = WHITE_BACKGROUND -- تغيير الخلفية للأبيض
-main.BorderSizePixel = 3
+main.BackgroundColor3 = WHITE_BACKGROUND -- إجبار اللون الأبيض
+main.BorderSizePixel = 4
 main.Visible = false
 main.Parent = gui
 
@@ -92,73 +71,36 @@ title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 title.Parent = main
 
--- وظيفة تأثير RGB
+--===== وظيفة تأثير RGB (قوس قزح) =====--
 RunService.RenderStepped:Connect(function()
-	local hue = tick() % 5 / 5
-	local color = Color3.fromHSV(hue, 1, 1)
-	
-	-- تطبيق اللون المتغير على الحواف
-	keyFrame.BorderColor3 = color
-	main.BorderColor3 = color
-	toggle.BorderColor3 = color
-	
-	-- تطبيق اللون المتغير على العناوين (النصوص)
-	keyTitle.TextColor3 = color
-	title.TextColor3 = color
+    local hue = (tick() % 3) / 3 -- سرعة الدوران (3 ثواني لكل دورة)
+    local rgbColor = Color3.fromHSV(hue, 1, 1)
+    
+    -- تطبيق RGB على الحواف
+    keyFrame.BorderColor3 = rgbColor
+    main.BorderColor3 = rgbColor
+    
+    -- تطبيق RGB على العناوين
+    keyTitle.TextColor3 = rgbColor
+    title.TextColor3 = rgbColor
 end)
 
---===== دوال مساعدة =====--
-local function createButton(name, y)
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 280, 0, 40)
-    btn.Position = UDim2.new(0, 20, 0, y)
-    btn.BackgroundColor3 = BTN_COLOR
-    btn.Text = name
-    btn.TextColor3 = Color3.fromRGB(0, 0, 0)
-    btn.Font = Enum.Font.GothamSemibold
-    btn.TextScaled = true
-    btn.BorderColor3 = Color3.fromRGB(200, 200, 200)
-    btn.Parent = main
-    return btn
-end
+-- زر ZERO الرئيسي (التوجل)
+local toggle = Instance.new("TextButton")
+toggle.Size = UDim2.new(0, 60, 0, 60)
+toggle.Position = UDim2.new(0.5, -30, 0, 20)
+toggle.BackgroundColor3 = WHITE_BACKGROUND
+toggle.Text = "لأعضاء ZERO"
+toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+toggle.Font = Enum.Font.GothamBold
+toggle.TextScaled = true
+toggle.BorderSizePixel = 3
+toggle.Visible = false
+toggle.Active = true
+toggle.Draggable = true
+toggle.Parent = gui
 
-local function createCounter(y)
-    local lbl = Instance.new("TextLabel")
-    lbl.Size = UDim2.new(0, 260, 0, 20)
-    lbl.Position = UDim2.new(0, 30, 0, y)
-    lbl.BackgroundTransparency = 1
-    lbl.TextColor3 = Color3.fromRGB(0, 0, 0)
-    lbl.Font = Enum.Font.GothamSemibold
-    lbl.TextScaled = true
-    lbl.Text = "Collected: 0"
-    lbl.Parent = main
-    return lbl
-end
-
--- الإحداثيات والوظائف
-local TARGET_X, TARGET_Y, TARGET_Z = -118.8, 21.5, 245.5
-
-local function TeleportToTarget()
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TARGET_X, TARGET_Y, TARGET_Z)
-    end
-end
-
-local teleportBtn = createButton("اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا", 50) 
-local phoneAutoBtn = createButton("هسا ابدا بل تدمير JR", 100)
-local phoneCounter = createCounter(155)
-
-local phoneAuto, phoneCount, lastTick, hasStartedDuping = false, 0, 0, {}
-
-phoneAutoBtn.MouseButton1Click:Connect(function()
-    phoneAuto = not phoneAuto
-    phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير ZERO"
-    if not phoneAuto then hasStartedDuping = {} end
-end)
-
-teleportBtn.MouseButton1Click:Connect(TeleportToTarget)
-toggle.MouseButton1Click:Connect(function() main.Visible = not main.Visible end)
-
+-- وظائف الأزرار...
 confirmKey.MouseButton1Click:Connect(function()
     if keyBox.Text == "ZERO3MK" then
         keyFrame.Visible = false
@@ -170,27 +112,6 @@ confirmKey.MouseButton1Click:Connect(function()
     end
 end)
 
--- حلقة العمل (Heartbeat)
-RunService.Heartbeat:Connect(function()
-    if phoneAuto and tick() - lastTick >= 0.016 then
-        lastTick = tick()
-        pcall(function()
-            local phone = Workspace.WorkspaceCom["001_CommercialStores"].CommercialStorage1.Store.Tools.Iphone
-            if phone and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                LocalPlayer.Character.HumanoidRootPart.CFrame = phone.CFrame + Vector3.new(0,2,0)
-                fireclickdetector(phone:FindFirstChildOfClass("ClickDetector"))
-                phoneCount = phoneCount + 9000
-                phoneCounter.Text = "Collected: " .. phoneCount
-            end
-        end)
-    end
-end)
-
--- تعديل الاسم والسيرة (الكلان)
-pcall(function()
-    local RE = game:GetService("ReplicatedStorage").RE
-    RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor", Color3.fromRGB(255, 0, 0))
-    RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor", Color3.fromRGB(0, 0, 0))
-    RE["1RPNam1eTex1t"]:FireServer("RolePlayName", "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺")
-    RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗحيۣۗہلۣۗہ سۣۗہكۣۗهرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆")
+toggle.MouseButton1Click:Connect(function()
+    main.Visible = not main.Visible
 end)
