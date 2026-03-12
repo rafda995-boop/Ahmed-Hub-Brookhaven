@@ -13,7 +13,7 @@ hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 local RED_COLOR = Color3.fromRGB(255, 50, 50)
 local BLACK_COLOR = Color3.fromRGB(0, 0, 0)
 local GRAY_COLOR = Color3.fromRGB(20, 20, 20)
-local white_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
+local DARK_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
 
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
@@ -47,19 +47,16 @@ keyBox.PlaceholderText = "أدخل المفتاح هنا..."
 keyBox.TextColor3 = RED_COLOR -- نص أحمر
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
-keyBox.Parent = keyFrame
-
 local confirmKey = Instance.new("TextButton")
 confirmKey.Size = UDim2.new(0, 260, 0, 40)
 confirmKey.Position = UDim2.new(0, 20, 0, 130)
-confirmKey.BackgroundColor3 = DARK_GRAY_COLOR
-confirmKey.BorderColor3 = RED_COLOR -- الحدود حمراء
+confirmKey.BackgroundColor3 = GRAY_COLOR
+confirmKey.BorderColor3 = RED_COLOR
 confirmKey.Text = "تأكيد المفتاح"
-confirmKey.TextColor3 = RED_COLOR -- نص أحمر
+confirmKey.TextColor3 = RED_COLOR
 confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
-
 -- زر ZERO الرئيسي
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
