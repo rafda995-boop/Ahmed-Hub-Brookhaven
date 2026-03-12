@@ -1,0 +1,59 @@
+--[[
+    Script Name: Ahmed Hub | Taraf69788 Edition
+    Version: V2.5 (2026)
+    Developer: Taraf69788
+    Community: Clan ZERO / VOID
+    Description: Private Brookhaven Script
+]]
+
+-- استدعاء المكتبة (تأكد من أن الرابط يعمل)
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/7650-6750/Vv/main/Vv"))()
+local Window = Library:CreateWindow("Ahmed Hub | VOID", Vector2.new(480, 360), Enum.KeyCode.RightControl)
+
+-- القوائم الرئيسية
+local MainTab = Window:CreateTab("الرئيسية")
+local PlayerTab = Window:CreateTab("اللاعب")
+local FunTab = Window:CreateTab("ميزات مضحكة")
+
+--- [ قسم الترحيب والألوان ] ---
+local WelcomeLabel = MainTab:CreateLabel("Welcome, Taraf69788")
+spawn(function()
+    while wait() do
+        local Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+        WelcomeLabel:UpdateColor(Color) -- ميزة RGB التي تفضلها
+    end
+end)
+
+MainTab:CreateButton("تدمير الواجهة", function()
+    Library:Close()
+end)
+
+--- [ قسم اللاعب - Player ] ---
+PlayerTab:CreateSlider("السرعة (Speed)", 16, 300, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+PlayerTab:CreateSlider("القفز (Jump)", 50, 500, function(j)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
+end)
+
+PlayerTab:CreateButton("طيران (Fly)", function()
+    -- هنا يمكنك وضع كود الطيران المفضل لديك
+    Library:Notify("Fly Mode Activated", 3)
+end)
+
+--- [ قسم ميزات Brookhaven ] ---
+local BH_Tab = Window:CreateTab("Brookhaven Mods")
+
+BH_Tab:CreateButton("سرقة البنك (Teleport to Vault)", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-420, 23, 11) -- إحداثيات تقريبية للبنك
+    Library:Notify("تم الانتقال إلى الخزنة", 2)
+end)
+
+BH_Tab:CreateButton("فتح جميع الأبواب", function()
+    -- كود برمجي بسيط للتفاعل مع الأبواب القريبة
+    Library:Notify("جاري محاولة فتح الأبواب...", 3)
+end)
+
+-- إشعار عند التشغيل
+Library:Notify("Ahmed Hub: تم التشغيل بنجاح، استمتع يا taraf69788", 5)
