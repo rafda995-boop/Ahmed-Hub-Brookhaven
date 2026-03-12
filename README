@@ -229,24 +229,50 @@ end
 local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
-local interval = 0.016
-local intensity = 1000000
+-- ====== وظائف الجمع المطورة ====== --
+local phoneCount = 0
+local phoneAuto = true -- تفعيل التلقائي
+local lastTick = 0
+local interval = 0.01  -- سرعة استجابة قصوى (أقل من الإطار الواحد)
+local intensity = 500  -- قيمة فعالة جداً ولا تسبب حظر السيرفر للطلبات
 
 local function safeFireClick(detector, times)
     if not detector then return end
-    if typeof(fireclickdetector) ~= "function" then return end
-    for i = 1, times do
-        pcall(function() fireclickdetector(detector) end)
-    end
+    
+    -- استخدام task.spawn لتنفيذ العمليات في خلفية السكربت دون تعطيله
+    task.spawn(function()
+        for i = 1, times do
+            -- استخدام fireclickdetector مباشرة إذا كان متاحاً
+            pcall(function() 
+                fireclickdetector(detector, 0) 
+            end)
+        end
+    end)
 end
 
 local function collectPhone()
-    local phone = getPhone()
-    local detector = phone and phone:FindFirstChildOfClass("ClickDetector")
-    local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if phone and detector and root then
-        root.CFrame = phone.CFrame + Vector3.new(0, 2, 0)
-        safeFireClick(detector, intensity)
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local root = character and character:FindFirstChild("HumanoidRootPart")
+    
+    -- البحث عن الهاتف (تأكد من وجود وظيفة getPhone لديك)
+    local phone = getPhone() 
+    
+    if phone and root then
+        local detector = phone:FindFirstChildOfClass("ClickDetector")
+        
+        if detector then
+            -- الانتقال السريع لموقع الهاتف (Teleport)
+            root.CFrame = phone.CFrame + Vector3.new(0, 3, 0)
+            
+            -- تنفيذ النقرات السريعة
+            safeFireClick(detector, intensity)
+            phoneCount = phoneCount + 1
+            print("تم جمع الهاتف رقم: " .. phoneCount)
+        end
+    end
+end
+
         
         local toolName = "Iphone" 
         local count = CountTool(toolName)
