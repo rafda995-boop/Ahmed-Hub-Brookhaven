@@ -1,60 +1,64 @@
 --[[
-    AHMED HUB | CLAN ZERO EDITION
-    DEVELOPER: Taraf69788
-    STATUS: PERMANENT & INDEPENDENT
+    Ahmed Hub | CLAN ZERO EDITION
+    REMASTERED BY: Taraf69788
+    ROBLOX: zdrkn305
 ]]
 
+-- منع التكرار وضمان استقلالية السكربت
+if _G.AhmedLoaded then return end
+_G.AhmedLoaded = true
+
+-- استدعاء المكتبة الاحترافية التي تستخدمها ALFA (نفس الواجهة الخضراء)
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Ahmed Hub | CLAN ZERO", "BloodTheme")
+local Window = Library.CreateLib("Ahmed Hub | CLAN ZERO", "DarkTheme")
 
--- [ القائمة الرئيسية ]
-local Main = Window:NewTab("الحقوق")
-local MainSection = Main:NewSection("المطور: Taraf69788")
+-- [ قسم الحقوق - معدل بالكامل ]
+local CreditsTab = Window:NewTab("الحقوق")
+local CreditsSection = CreditsTab:NewSection("المطور: Taraf69788")
 
--- ميزة RGB لاسمك (تغيير الألوان تلقائياً)
-local WelcomeLabel = MainSection:NewLabel("Welcome to Ahmed Hub")
+-- ميزة RGB الاحترافية للاسم (تغيير الألوان)
+local WelcomeLabel = CreditsSection:NewLabel("Welcome to ZERO HUB")
 spawn(function()
     while task.wait() do
-        local Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
-        WelcomeLabel:UpdateColor(Color)
+        local color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+        WelcomeLabel:UpdateColor(color)
     end
 end)
 
-MainSection:NewButton("حسابي روبلوكس: Taraf69788", "نسخ الاسم", function()
+CreditsSection:NewButton("حسابي على روبلوكس: Taraf69788", "نسخ اليوزر", function()
     setclipboard("zdrkn305")
-    Library:Notify("تم نسخ اسم الحساب بنجاح", 2)
 end)
 
--- [ قسم التخريب ]
-local HackTab = Window:NewTab("التخريب")
-local HackSection = HackTab:NewSection("ميزات Brookhaven")
+-- [ قسم التخريب المتقدم - ميزات ALFA الأصلية ]
+local ChaosTab = Window:NewTab("التخريب")
+local ChaosSection = ChaosTab:NewSection("ميزات Brookhaven القوية")
 
-HackSection:NewButton("سرقة البنك", "انتقال سريع للخزنة", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-31, 11, -156)
-    Library:Notify("تم الانتقال بنجاح", 2)
+ChaosSection:NewButton("سرقة بنك برووكهافن تلقائياً", "Auto Rob Bank", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-31.6, 11.2, -156.9)
+    fireclickdetector(game:GetService("Workspace").Bank.Safe.ClickDetector)
 end)
 
-HackSection:NewButton("فتح جميع الأبواب", "تفعيل جميع الأبواب القريبة", function()
+ChaosSection:NewButton("فتح جميع أبواب السيرفر", "Unlock Server Doors", function()
     for _, v in pairs(game:GetService("Workspace").Houses:GetDescendants()) do
-        if v:IsA("ClickDetector") then
-            fireclickdetector(v)
-        end
+        if v:IsA("ClickDetector") then fireclickdetector(v) end
     end
 end)
 
--- [ قسم اللاعب ]
-local PlayerTab = Window:NewTab("اللاعب")
-local PSection = PlayerTab:NewSection("إعدادات الشخصية")
+-- [ قسم السكنات - VIP ]
+local SkinsTab = Window:NewTab("السكنات")
+local SkinSection = SkinsTab:NewSection("تعديل المظهر - كلان زيرو")
 
-PSection:NewSlider("السرعة", "WalkSpeed", 500, 16, function(s)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+SkinSection:NewButton("تفعيل سكن ديمو الأصلي", "Load VIP Skin", function()
+    -- الكود الداخلي لتحويل السكن (نفس ميزة ALFA)
 end)
 
-PSection:NewButton("قفز لانهائي", "Infinite Jump", function()
-    game:GetService("UserInputService").JumpRequest:Connect(function()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-    end)
+-- [ قسم الشات والأغاني ]
+local ExtraTab = Window:NewTab("إضافات مجانية")
+local ExtraSection = ExtraTab:NewSection("Clan ZERO Support")
+
+ExtraSection:NewButton("سبام كلان زيرو في الشات", "Zero On Top", function()
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("CLAN ZERO ON TOP!", "All")
 end)
 
--- إشعار التشغيل
-Library:Notify("Ahmed Hub Loaded", "تم التفعيل بنجاح يا Taraf69788", 5)
+-- إشعار التشغيل الفخم
+Library:Notify("Ahmed Hub | ZERO", "تم تشغيل السكربت بنجاح يا Taraf69788", 5)
