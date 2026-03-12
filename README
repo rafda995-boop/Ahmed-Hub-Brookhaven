@@ -120,7 +120,7 @@ local phoneCount = 0
 local phoneAuto = false
 local lastTick = 0
 local interval = 0.01
-local intensity = 500
+local intensity = 350
 
 local function getPhone()
     local p = Workspace:FindFirstChild("WorkspaceCom")
