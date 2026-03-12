@@ -29,34 +29,47 @@ keyFrame.BackgroundColor3 = BLACK_COLOR
 keyFrame.BorderColor3 = RED_COLOR -- الحدود حمراء
 keyFrame.Parent = gui
 
+-- شاشة المفتاح
+local keyFrame = Instance.new("Frame")
+keyFrame.Size = UDim2.new(0, 300, 0, 220)
+keyFrame.Position = UDim2.new(0.5, -150, 0.5, -110)
+keyFrame.BackgroundColor3 = BLACK_COLOR
+keyFrame.BorderColor3 = RED_COLOR
+keyFrame.Parent = gui
+
 local keyTitle = Instance.new("TextLabel")
 keyTitle.Size = UDim2.new(1, 0, 0, 40)
+keyTitle.Position = UDim2.new(0, 0, 0, 10)
 keyTitle.BackgroundTransparency = 1
-keyTitle.Text = "🔒 أدخل مفتاح ZERO🔒"
-keyTitle.TextColor3 = RED_COLOR -- نص أحمر
+keyTitle.Text = "🔒 أدخل مفتاح ZERO 🔒"
+keyTitle.TextColor3 = RED_COLOR
 keyTitle.Font = Enum.Font.GothamBold
 keyTitle.TextScaled = true
 keyTitle.Parent = keyFrame
 
 local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(0, 260, 0, 40)
-keyBox.Position = UDim2.new(0, 20, 0, 70)
+keyBox.Size = UDim2.new(0, 240, 0, 45)
+keyBox.Position = UDim2.new(0, 30, 0, 70)
 keyBox.BackgroundColor3 = GRAY_COLOR
-keyBox.BorderColor3 = RED_COLOR -- الحدود حمراء
-keyBox.PlaceholderText = "أدخل المفتاح هنا..."
-keyBox.TextColor3 = RED_COLOR -- نص أحمر
+keyBox.BorderColor3 = RED_COLOR
+keyBox.PlaceholderText = "اكتب الكود هنا..."
+keyBox.Text = "" 
+keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
+keyBox.Parent = keyFrame
+
 local confirmKey = Instance.new("TextButton")
-confirmKey.Size = UDim2.new(0, 260, 0, 40)
-confirmKey.Position = UDim2.new(0, 20, 0, 130)
-confirmKey.BackgroundColor3 = GRAY_COLOR
+confirmKey.Size = UDim2.new(0, 200, 0, 40)
+confirmKey.Position = UDim2.new(0, 50, 0, 140)
+confirmKey.BackgroundColor3 = white_GRAY_COLOR
 confirmKey.BorderColor3 = RED_COLOR
 confirmKey.Text = "تأكيد المفتاح"
 confirmKey.TextColor3 = RED_COLOR
 confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
+
 -- زر ZERO الرئيسي
 
 local toggle = Instance.new("TextButton")
