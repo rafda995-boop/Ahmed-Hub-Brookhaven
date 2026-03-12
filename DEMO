@@ -1,30 +1,60 @@
 --[[
-    Ahmed Hub | Taraf69788 Edition
-    حقوق التطوير لـ Ahmed (Taraf69788)
+    AHMED HUB | CLAN ZERO EDITION
+    DEVELOPER: Taraf69788
+    STATUS: PERMANENT & INDEPENDENT
 ]]
 
--- استخدام مكتبة Kavo المستقرة جداً
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Ahmed Hub | Brookhaven", "BloodTheme") -- يمكنك تغيير اللون هنا
+local Window = Library.CreateLib("Ahmed Hub | CLAN ZERO", "BloodTheme")
 
--- القوائم
-local Main = Window:NewTab("الرئيسية")
-local Section = Main:NewSection("مرحباً بك Taraf69788")
+-- [ القائمة الرئيسية ]
+local Main = Window:NewTab("الحقوق")
+local MainSection = Main:NewSection("المطور: Taraf69788")
 
-Section:NewButton("سرعة اللاعب (Speed 100)", "يجعل سرعتك 100", function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+-- ميزة RGB لاسمك (تغيير الألوان تلقائياً)
+local WelcomeLabel = MainSection:NewLabel("Welcome to Ahmed Hub")
+spawn(function()
+    while task.wait() do
+        local Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+        WelcomeLabel:UpdateColor(Color)
+    end
 end)
 
-Section:NewButton("قفزة عالية (Jump 100)", "يزيد قوة القفز", function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+MainSection:NewButton("حسابي روبلوكس: Taraf69788", "نسخ الاسم", function()
+    setclipboard("zdrkn305")
+    Library:Notify("تم نسخ اسم الحساب بنجاح", 2)
 end)
 
-local Teleport = Window:NewTab("انتقالات")
-local TeleSection = Teleport:NewSection("أماكن Brookhaven")
+-- [ قسم التخريب ]
+local HackTab = Window:NewTab("التخريب")
+local HackSection = HackTab:NewSection("ميزات Brookhaven")
 
-TeleSection:NewButton("انتقال إلى البنك", "Teleport to Bank", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-420, 23, 11)
+HackSection:NewButton("سرقة البنك", "انتقال سريع للخزنة", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-31, 11, -156)
+    Library:Notify("تم الانتقال بنجاح", 2)
 end)
 
--- إشعار عند التشغيل
-print("Ahmed Hub Loaded Successfully!")
+HackSection:NewButton("فتح جميع الأبواب", "تفعيل جميع الأبواب القريبة", function()
+    for _, v in pairs(game:GetService("Workspace").Houses:GetDescendants()) do
+        if v:IsA("ClickDetector") then
+            fireclickdetector(v)
+        end
+    end
+end)
+
+-- [ قسم اللاعب ]
+local PlayerTab = Window:NewTab("اللاعب")
+local PSection = PlayerTab:NewSection("إعدادات الشخصية")
+
+PSection:NewSlider("السرعة", "WalkSpeed", 500, 16, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+PSection:NewButton("قفز لانهائي", "Infinite Jump", function()
+    game:GetService("UserInputService").JumpRequest:Connect(function()
+        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+    end)
+end)
+
+-- إشعار التشغيل
+Library:Notify("Ahmed Hub Loaded", "تم التفعيل بنجاح يا Taraf69788", 5)
