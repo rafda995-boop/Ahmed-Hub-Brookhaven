@@ -1,23 +1,20 @@
--- 💀 ZERO Phone Final - White Edition + RGB + Bio 💀
+-- 💀 CLAN ZERO - ULTIMATE RGB DESTROYER 💀
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
 
--- إعداد الألوان
-local WHITE = Color3.fromRGB(255, 255, 255)
-
---===== إنشاء الواجهة =====--
+-- إعدادات الواجهة
 local gui = Instance.new("ScreenGui")
-gui.Name = "ZERO_SuperFinal"
+gui.Name = "ZERO_RGB_ULTIMATE"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
--- 1. نافذة المفتاح (بيضاء مع RGB)
+-- 1. نافذة المفتاح
 local keyFrame = Instance.new("Frame")
 keyFrame.Size = UDim2.new(0, 300, 0, 240)
 keyFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
-keyFrame.BackgroundColor3 = WHITE
+keyFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 keyFrame.BorderSizePixel = 4
 keyFrame.Parent = gui
 
@@ -32,10 +29,9 @@ keyTitle.Parent = keyFrame
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(0, 240, 0, 45)
 keyBox.Position = UDim2.new(0, 30, 0, 80)
-keyBox.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+keyBox.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
 keyBox.Text = ""
 keyBox.PlaceholderText = "اكتب الكود هنا..."
-keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
 keyBox.Parent = keyFrame
 
@@ -43,89 +39,126 @@ local confirmBtn = Instance.new("TextButton")
 confirmBtn.Size = UDim2.new(0, 200, 0, 45)
 confirmBtn.Position = UDim2.new(0.5, -100, 0, 150)
 confirmBtn.BackgroundColor3 = Color3.fromRGB(230, 230, 230)
-confirmBtn.Text = "تأكيد المفتاح"
+confirmBtn.Text = "تأكيد"
 confirmBtn.Font = Enum.Font.GothamBold
 confirmBtn.TextScaled = true
 confirmBtn.Parent = keyFrame
 
--- 2. القائمة الرئيسية (بيضاء مع الأزرار)
+-- 2. القائمة الرئيسية (RGB Full Power)
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0, 340, 0, 240)
-main.Position = UDim2.new(0.5, -170, 0.5, -120)
-main.BackgroundColor3 = WHITE
+main.Size = UDim2.new(0, 340, 0, 260)
+main.Position = UDim2.new(0.5, -170, 0.5, -130)
+main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 main.BorderSizePixel = 4
 main.Visible = false
 main.Parent = gui
 
 local mainTitle = Instance.new("TextLabel")
-mainTitle.Size = UDim2.new(1, 0, 0, 40)
+mainTitle.Size = UDim2.new(1, 0, 0, 50)
 mainTitle.BackgroundTransparency = 1
-mainTitle.Text = "سكربت 🔥خارق و قوي للعضاء كلان ZERO و اصلية🔥"
+mainTitle.Text = "🔥 سكربت تدمير ZERO الخارق 🔥"
 mainTitle.Font = Enum.Font.GothamBold
 mainTitle.TextScaled = true
 mainTitle.Parent = main
 
--- أزرار التفعيل (إعادة الأزرار المفقودة)
-local btn1 = Instance.new("TextButton")
-btn1.Size = UDim2.new(0, 300, 0, 50)
-btn1.Position = UDim2.new(0, 20, 0, 50)
-btn1.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
-btn1.Text = "اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا"
-btn1.TextScaled = true
-btn1.Parent = main
+-- أزرار النظام القديم (نظام التدمير المكثف)
+local function createBtn(text, y)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(0, 300, 0, 55)
+    b.Position = UDim2.new(0, 20, 0, y)
+    b.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+    b.Text = text
+    b.Font = Enum.Font.GothamBold
+    b.TextScaled = true
+    b.BorderSizePixel = 2
+    b.Parent = main
+    return b
+end
 
-local btn2 = Instance.new("TextButton")
-btn2.Size = UDim2.new(0, 300, 0, 50)
-btn2.Position = UDim2.new(0, 20, 0, 110)
-btn2.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
-btn2.Text = "هسا ابدا بل تدمير JR"
-btn2.TextScaled = true
-btn2.Parent = main
+local teleportBtn = createBtn("النقل للمخزن (1)", 60)
+local destroyBtn = createBtn("بدء التدمير الشامل JR (2)", 125)
 
 local counter = Instance.new("TextLabel")
-counter.Size = UDim2.new(1, 0, 0, 30)
-counter.Position = UDim2.new(0, 0, 0, 170)
+counter.Size = UDim2.new(1, 0, 0, 40)
+counter.Position = UDim2.new(0, 0, 0, 190)
 counter.BackgroundTransparency = 1
-counter.Text = "Collected: 0"
-counter.TextColor3 = Color3.fromRGB(0,0,0)
+counter.Text = "تدمير: 0"
+counter.Font = Enum.Font.GothamBold
 counter.TextScaled = true
 counter.Parent = main
 
--- 3. الزر العائم (لأعضاء ZERO)
+-- 3. الزر العائم
 local toggle = Instance.new("TextButton")
-toggle.Size = UDim2.new(0, 70, 0, 70)
-toggle.Position = UDim2.new(0.5, -35, 0, 20)
-toggle.BackgroundColor3 = WHITE
-toggle.Text = "لأعضاء ZERO"
-toggle.BorderSizePixel = 3
+toggle.Size = UDim2.new(0, 75, 0, 75)
+toggle.Position = UDim2.new(0.5, -37, 0, 20)
+toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+toggle.Text = "ZERO"
+toggle.Font = Enum.Font.GothamBold
+toggle.TextScaled = true
+toggle.BorderSizePixel = 4
 toggle.Visible = false
-toggle.Draggable = true
 toggle.Active = true
+toggle.Draggable = true
 toggle.Parent = gui
 
---===== نظام RGB المتغير =====--
+--===== نظام RGB الحقيقي (الألوان المتغيرة) =====--
 RunService.RenderStepped:Connect(function()
-    local hue = (tick() % 4) / 4
+    local hue = (tick() % 3) / 3 -- سرعة تغيير اللون
     local color = Color3.fromHSV(hue, 1, 1)
     
-    -- تطبيق على الحواف
+    -- حواف النوافذ
     keyFrame.BorderColor3 = color
     main.BorderColor3 = color
     toggle.BorderColor3 = color
     
-    -- تطبيق على الأسماء
+    -- النصوص الرئيسية
     keyTitle.TextColor3 = color
     mainTitle.TextColor3 = color
     toggle.TextColor3 = color
+    counter.TextColor3 = color
+    
+    -- حواف الأزرار
+    teleportBtn.BorderColor3 = color
+    destroyBtn.BorderColor3 = color
 end)
 
---===== الوظائف والتفعيلات =====--
+--===== وظيفة التدمير (قوة مضاعفة) =====--
+local destroying = false
+local totalDestroyed = 0
+
+destroyBtn.MouseButton1Click:Connect(function()
+    destroying = not destroying
+    destroyBtn.Text = destroying and "🛑 إيقاف التدمير" or "بدء التدمير الشامل JR (2)"
+end)
+
+-- حلقة التدمير السريع (النظام القديم القوي)
+task.spawn(function()
+    while true do
+        if destroying then
+            pcall(function()
+                local phone = Workspace.WorkspaceCom["001_CommercialStores"].CommercialStorage1.Store.Tools.Iphone
+                if phone then
+                    local cd = phone:FindFirstChildOfClass("ClickDetector")
+                    -- إرسال 10 نقرات في كل جزء من الثانية لزيادة القوة
+                    for i = 1, 10 do
+                        fireclickdetector(cd)
+                    end
+                    totalDestroyed = totalDestroyed + 10
+                    counter.Text = "تدمير: " .. totalDestroyed
+                end
+            end)
+        end
+        task.wait(0.01) -- سرعة خارقة
+    end
+end)
+
+--===== باقي التفعيلات =====--
 confirmBtn.MouseButton1Click:Connect(function()
     if keyBox.Text == "ZERO3MK" then
         keyFrame.Visible = false
         toggle.Visible = true
         
-        -- تفعيل الاسم والبايو تلقائياً
+        -- تفعيل الاسم والبايو فوراً
         pcall(function()
             local RE = game:GetService("ReplicatedStorage").RE
             RE["1RPNam1eTex1t"]:FireServer("RolePlayName", "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺")
@@ -134,27 +167,10 @@ confirmBtn.MouseButton1Click:Connect(function()
     end
 end)
 
-toggle.MouseButton1Click:Connect(function()
-    main.Visible = not main.Visible
-end)
-
--- وظيفة النقل
-btn1.MouseButton1Click:Connect(function()
+teleportBtn.MouseButton1Click:Connect(function()
     LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-118.8, 21.5, 245.5)
 end)
 
--- وظيفة التدمير
-local phoneAuto = false
-btn2.MouseButton1Click:Connect(function()
-    phoneAuto = not phoneAuto
-    btn2.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير JR"
-end)
-
-RunService.Heartbeat:Connect(function()
-    if phoneAuto then
-        pcall(function()
-            local cd = Workspace.WorkspaceCom["001_CommercialStores"].CommercialStorage1.Store.Tools.Iphone:FindFirstChildOfClass("ClickDetector")
-            fireclickdetector(cd)
-        end)
-    end
+toggle.MouseButton1Click:Connect(function()
+    main.Visible = not main.Visible
 end)
