@@ -4,16 +4,16 @@ local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
--- مجلد التخزين المؤقت للشخصية (مهم لعمل char.Parent = nil)
+-- مجلد التخزين المؤقت للشخصية
 local hiddenCharacterFolder = Instance.new("Folder")
 hiddenCharacterFolder.Name = "JR_Hidden_Storage"
 hiddenCharacterFolder.Parent = game:GetService("CoreGui")
 
--- اللون الأحمر الجديد (255, 50, 50)
+-- الألوان
 local RED_COLOR = Color3.fromRGB(255, 50, 50)
 local BLACK_COLOR = Color3.fromRGB(0, 0, 0)
 local GRAY_COLOR = Color3.fromRGB(20, 20, 20)
-local DARK_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
+local white_GRAY_COLOR = Color3.fromRGB(40, 40, 40)
 
 --===== إعداد GUI =====--
 local gui = Instance.new("ScreenGui")
@@ -21,49 +21,39 @@ gui.Name = "ZERO_PhoneGUI_v3000_Brookhaven"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
--- شاشة المفتاح
+-- شاشة المفتاح (إصدار مصحح للجوال)
 local keyFrame = Instance.new("Frame")
-keyFrame.Size = UDim2.new(0, 300, 0, 200)
-keyFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
-keyFrame.BackgroundColor3 = BLACK_COLOR
-keyFrame.BorderColor3 = RED_COLOR -- الحدود حمراء
-keyFrame.Parent = gui
-
--- شاشة المفتاح
-local keyFrame = Instance.new("Frame")
-keyFrame.Size = UDim2.new(0, 300, 0, 220)
-keyFrame.Position = UDim2.new(0.5, -150, 0.5, -110)
+keyFrame.Size = UDim2.new(0, 300, 0, 240)
+keyFrame.Position = UDim2.new(0.5, -150, 0.5, -120)
 keyFrame.BackgroundColor3 = BLACK_COLOR
 keyFrame.BorderColor3 = RED_COLOR
+keyFrame.BorderSizePixel = 2
 keyFrame.Parent = gui
 
 local keyTitle = Instance.new("TextLabel")
-keyTitle.Size = UDim2.new(1, 0, 0, 40)
-keyTitle.Position = UDim2.new(0, 0, 0, 10)
+keyTitle.Size = UDim2.new(1, 0, 0, 45)
 keyTitle.BackgroundTransparency = 1
-keyTitle.Text = "🔒 أدخل مفتاح ZERO 🔒"
+keyTitle.Text = "🔒 أدخل مفتاح ZERO🔒"
 keyTitle.TextColor3 = RED_COLOR
 keyTitle.Font = Enum.Font.GothamBold
 keyTitle.TextScaled = true
 keyTitle.Parent = keyFrame
 
 local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(0, 240, 0, 45)
-keyBox.Position = UDim2.new(0, 30, 0, 75)
-keyBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- لون رمادي واضح
+keyBox.Size = UDim2.new(0, 260, 0, 45)
+keyBox.Position = UDim2.new(0, 20, 0, 75)
+keyBox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 keyBox.BorderColor3 = RED_COLOR
-keyBox.PlaceholderText = "اكتب الكود هنا..."
-keyBox.Text = "" 
-keyBox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
+keyBox.PlaceholderText = "أدخل المفتاح هنا..."
+keyBox.Text = ""
 keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextScaled = true
-keyBox.ZIndex = 10 -- يضمن ظهوره فوق الخلفية السوداء
 keyBox.Parent = keyFrame
 
 local confirmKey = Instance.new("TextButton")
-confirmKey.Size = UDim2.new(0, 200, 0, 40)
-confirmKey.Position = UDim2.new(0, 50, 0, 140)
+confirmKey.Size = UDim2.new(0, 260, 0, 45)
+confirmKey.Position = UDim2.new(0, 20, 0, 150)
 confirmKey.BackgroundColor3 = white_GRAY_COLOR
 confirmKey.BorderColor3 = RED_COLOR
 confirmKey.Text = "تأكيد المفتاح"
@@ -73,13 +63,12 @@ confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 
 -- زر ZERO الرئيسي
-
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
 toggle.Position = UDim2.new(0.5, -30, 0, 20)
 toggle.BackgroundColor3 = BLACK_COLOR
-toggle.Text = "لأعضاء JR" -- تم التعديل
-toggle.TextColor3 = RED_COLOR -- نص أحمر
+toggle.Text = "لأعضاء JR"
+toggle.TextColor3 = RED_COLOR
 toggle.Font = Enum.Font.GothamBold
 toggle.TextScaled = true
 toggle.BorderSizePixel = 0
@@ -93,15 +82,15 @@ local main = Instance.new("Frame")
 main.Size = UDim2.new(0, 320, 0, 200) 
 main.Position = UDim2.new(0.5, -160, 0.5, -100)
 main.BackgroundColor3 = BLACK_COLOR
-main.BorderColor3 = RED_COLOR -- الحدود حمراء
+main.BorderColor3 = RED_COLOR
 main.Visible = false
 main.Parent = gui
 
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.BackgroundTransparency = 1
-title.Text = "سكربت 🔥خارق و قوي للعضاء كلان ZERO و اصلية🔥" -- تم صنع سكربت لكلان
-title.TextColor3 = RED_COLOR -- نص أحمر
+title.Text = "سكربت 🔥خارق و قوي للعضاء كلان ZERO و اصلية🔥"
+title.TextColor3 = RED_COLOR
 title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 title.Parent = main
@@ -113,10 +102,10 @@ local function createButton(name, y)
     btn.Position = UDim2.new(0, 30, 0, y)
     btn.BackgroundColor3 = GRAY_COLOR
     btn.Text = name
-    btn.TextColor3 = RED_COLOR -- نص أحمر
+    btn.TextColor3 = RED_COLOR
     btn.Font = Enum.Font.GothamSemibold
     btn.TextScaled = true
-    btn.BorderColor3 = RED_COLOR -- الحدود حمراء
+    btn.BorderColor3 = RED_COLOR
     btn.Parent = main
     return btn
 end
@@ -126,7 +115,7 @@ local function createCounter(y)
     lbl.Size = UDim2.new(0, 260, 0, 20)
     lbl.Position = UDim2.new(0, 30, 0, y)
     lbl.BackgroundTransparency = 1
-    lbl.TextColor3 = RED_COLOR -- نص أحمر
+    lbl.TextColor3 = RED_COLOR
     lbl.Font = Enum.Font.GothamSemibold
     lbl.TextScaled = true
     lbl.Text = "Collected: 0"
@@ -134,261 +123,88 @@ local function createCounter(y)
     return lbl
 end
 
--- الإحداثيات المستهدفة للانتقال
-local TARGET_X = -118.8
-local TARGET_Y = 21.5   
-local TARGET_Z = 245.5
+-- الإحداثيات المستهدفة
+local TARGET_X, TARGET_Y, TARGET_Z = -118.8, 21.5, 245.5
 
--- وظيفة الانتقال الفوري الجديدة
 local function TeleportToTarget()
-    if LocalPlayer and LocalPlayer.Character then
-        local HRP = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        
-        if HRP then
-            local TargetCFrame = CFrame.new(TARGET_X, TARGET_Y, TARGET_Z)
-            HRP.CFrame = TargetCFrame
-            print("✅ تم الانتقال بنجاح إلى الموقع: X:" .. TARGET_X .. ", Y:" .. TARGET_Y .. ", Z:" .. TARGET_Z)
-        else
-            print("⚠️ HumanoidRootPart غير موجود. الرجاء التأكد من تحميل شخصيتك بالكامل.")
-        end
-    else
-        print("⚠️ لم يتم العثور على اللاعب المحلي.")
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TARGET_X, TARGET_Y, TARGET_Z)
     end
 end
 
--- زر الإنتقال الجديد (تم تعديل النص)
 local teleportBtn = createButton("اول شي اكبس هنا و ينقلك عشان تكبس عل اول زر phone بعده ابدا", 60) 
--- زر وتجميع الهاتف (تم تعديل النص)
 local phoneAutoBtn = createButton("هسا ابدا بل تدمير JR", 110)
 local phoneCounter = createCounter(160)
 
-
---===== وظائف التحكم المدمجة: الشخصية والأدوات =====--
-
--- وظيفة إخفاء الشخصية وإزالتها من Workspace
+-- وظائف التدمير والتحكم
 local function HideCharacter()
     local char = LocalPlayer.Character
     if char and char.Parent ~= hiddenCharacterFolder then
-        local humanoid = char:FindFirstChildOfClass("Humanoid")
-        if humanoid then
-            humanoid.Health = 0
-        end
+        if char:FindFirstChildOfClass("Humanoid") then char:FindFirstChildOfClass("Humanoid").Health = 0 end
         char.Parent = hiddenCharacterFolder
     end
 end
 
--- وظيفة إظهار الشخصية واستعادتها إلى Workspace
-local function ShowCharacter()
-    local char = LocalPlayer.Character
-    if char and char.Parent == hiddenCharacterFolder then
-        char.Parent = Workspace
-        local humanoid = char:FindFirstChildOfClass("Humanoid")
-        if humanoid then
-            humanoid.Health = humanoid.MaxHealth 
-        end
-    end
-end
-
--- وظيفة التخلص من الأدوات (ClearTools)
 local function ClearTools()
-    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do
-        if tool:IsA("Tool") then
-            tool:Destroy()
-        end
-    end
-    if LocalPlayer.Character then
-        for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do
-            if tool:IsA("Tool") then
-                tool:Destroy()
-            end
-        end
-    end
+    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do if tool:IsA("Tool") then tool:Destroy() end end
+    if LocalPlayer.Character then for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do if tool:IsA("Tool") then tool:Destroy() end end end
 end
 
--- وظيفة عد الأدوات
 local function CountTool(toolName)
     local count = 0
-    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do
-        if tool:IsA("Tool") and tool.Name == toolName then
-            count = count + 1
-        end
-    end
-    if LocalPlayer.Character then
-        for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do
-            if tool:IsA("Tool") and tool.Name == toolName then
-                count = count + 1
-            end
-        end
-    end
+    for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do if tool.Name == toolName then count = count + 1 end end
+    if LocalPlayer.Character then for _, tool in ipairs(LocalPlayer.Character:GetChildren()) do if tool.Name == toolName then count = count + 1 end end end
     return count
 end
 
-local hasStartedDuping = {} 
+local phoneAuto, phoneCount, lastTick, hasStartedDuping = false, 0, 0, {}
 
---===== البحث عن الهاتف =====--
-local function getPhone()
-    local p = Workspace:FindFirstChild("WorkspaceCom")
-    if not p then return end
-    local store = p:FindFirstChild("001_CommercialStores")
-    if not store then return end
-    local c1 = store:FindFirstChild("CommercialStorage1")
-    if not c1 then return end
-    local tools = c1:FindFirstChild("Store") and c1.Store:FindFirstChild("Tools")
-    if not tools then return end
-    return tools:FindFirstChild("Iphone")
-end
-
---===== وظائف الجمع =====--
-local phoneCount = 0
-local phoneAuto = false
-local lastTick = 0
-local interval = 0.016
-local intensity = 9000
-
-local function safeFireClick(detector, times)
-    if not detector then return end
-    if typeof(fireclickdetector) ~= "function" then return end
-    for i = 1, times do
-        pcall(function() fireclickdetector(detector) end)
-    end
-end
-
-local function collectPhone()
-    local phone = getPhone()
-    local detector = phone and phone:FindFirstChildOfClass("ClickDetector")
-    local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if phone and detector and root then
-        root.CFrame = phone.CFrame + Vector3.new(0, 2, 0)
-        safeFireClick(detector, intensity)
-        
-        local toolName = "Iphone" 
-        local count = CountTool(toolName)
-        if count > 0 and not hasStartedDuping[toolName] then
-            hasStartedDuping[toolName] = true
-            HideCharacter() 
-        end
-    end
-end
-
---===== Advanced Anti-Lag (Player + All Tools Hide) - تم التحديث =====--
-local savedObjects = {}
-
-local function hideEverythingAroundPlayer(hide)
-    if hide then
-        ClearTools() 
-    else
-        ShowCharacter() 
-    end
-    
-    for _, obj in ipairs(Workspace:GetDescendants()) do
-        if obj:IsA("BasePart") then
-            if hide then
-                savedObjects[obj] = {Transparency=obj.Transparency, CanCollide=obj.CanCollide}
-                obj.Transparency = 1
-                obj.CanCollide = false
-            elseif savedObjects[obj] then
-                obj.Transparency = savedObjects[obj].Transparency
-                obj.CanCollide = savedObjects[obj].CanCollide
-                savedObjects[obj] = nil
-            end
-        end
-    end
-
-    local function hideAllPlayerTools(container)
-        for _, tool in ipairs(container:GetChildren()) do
-            if tool:IsA("Tool") then
-                for _, part in ipairs(tool:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        if hide then
-                            savedObjects[part] = {Transparency=part.Transparency, CanCollide=part.CanCollide}
-                            part.Transparency = 1
-                            part.CanCollide = false
-                        elseif savedObjects[part] then
-                            part.Transparency = savedObjects[part].Transparency
-                            part.CanCollide = savedObjects[part].CanCollide
-                            savedObjects[part] = nil
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    hideAllPlayerTools(LocalPlayer.Backpack)        
-    if LocalPlayer.Character then
-        hideAllPlayerTools(LocalPlayer.Character)   
-    end
-    local toolsFolder = Workspace:FindFirstChild("Tools")
-    if toolsFolder then
-        hideAllPlayerTools(toolsFolder)             
-    end
-end
-
---===== تفاعلات الأزرار =====--
-
--- تفاعل زر Teleport
-teleportBtn.MouseButton1Click:Connect(function()
-    TeleportToTarget()
-end)
-
--- تفاعل زر Auto Phone 
 phoneAutoBtn.MouseButton1Click:Connect(function()
     phoneAuto = not phoneAuto
-    -- تعديل نص الزر عند الإيقاف والتشغيل
     phoneAutoBtn.Text = phoneAuto and "🛑 اوقف التدمير" or "هسا ابدا بل تدمير JR"
-    
-    if not phoneAuto then
-        hasStartedDuping = {} 
-    end
-    
-    hideEverythingAroundPlayer(phoneAuto)
+    if not phoneAuto then hasStartedDuping = {} end
 end)
 
+teleportBtn.MouseButton1Click:Connect(TeleportToTarget)
+toggle.MouseButton1Click:Connect(function() main.Visible = not main.Visible end)
 
---===== حلقة التجميع =====--
-RunService.Heartbeat:Connect(function()
-    if tick() - lastTick >= interval then
-        lastTick = tick()
-        if phoneAuto then
-            collectPhone()
-            phoneCount = phoneCount + intensity
-            phoneCounter.Text = "Collected: " .. tostring(phoneCount)
-        end
-    end
-end)
-
---===== تفعيل واجهة ZERO =====--
-toggle.MouseButton1Click:Connect(function()
-    main.Visible = not main.Visible
-end)
-
---===== التحقق من المفتاح =====--
 confirmKey.MouseButton1Click:Connect(function()
     if keyBox.Text == "ZERO3MK" then
         keyFrame.Visible = false
         toggle.Visible = true
     else
         keyTitle.Text = "❌ مفتاح خاطئ!"
-        keyTitle.TextColor3 = RED_COLOR 
+        task.wait(1.5)
+        keyTitle.Text = "🔒 أدخل مفتاح ZERO🔒"
     end
 end)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RPNameColorRemote = ReplicatedStorage.RE["1RPNam1eColo1r"]
-local RPBioColorRemote = ReplicatedStorage.RE["1RPNam1eColo1r"]
-local RPNameTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
-local RPBioTextRemote = ReplicatedStorage.RE["1RPNam1eTex1t"]
 
--- 🔥 تم تعديل هذا السطر فقط مثل ما طلبت
-local rpName = "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺"
-local rpBio = "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗہیۣۗہلۣۗہ سۣۗہكۣۗہرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆"
+-- حلقة العمل (Heartbeat) وتعديل RP
+RunService.Heartbeat:Connect(function()
+    if phoneAuto and tick() - lastTick >= 0.016 then
+        lastTick = tick()
+        -- منطق التجميع (مختصر)
+        pcall(function()
+            local phone = Workspace.WorkspaceCom["001_CommercialStores"].CommercialStorage1.Store.Tools.Iphone
+            if phone and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = phone.CFrame + Vector3.new(0,2,0)
+                fireclickdetector(phone:FindFirstChildOfClass("ClickDetector"))
+                if CountTool("Iphone") > 0 and not hasStartedDuping["Iphone"] then
+                    hasStartedDuping["Iphone"] = true
+                    HideCharacter()
+                end
+                phoneCount = phoneCount + 9000
+                phoneCounter.Text = "Collected: " .. phoneCount
+            end
+        end)
+    end
+end)
 
--- لون الاسم تم تعيينه على الأحمر (كما طلبته سابقًا)
-local rpNameColor = Color3.fromRGB(255, 0, 0) -- الأحمر
-
--- تم تعديل لون السيرة الذاتية إلى الأسود (Black)
-local rpBioColor = Color3.fromRGB(0, 0, 0) -- الأسود
-
-RPNameColorRemote:FireServer("PickingRPNameColor", rpNameColor)
-RPBioColorRemote:FireServer("PickingRPBioColor", rpBioColor)
-RPNameTextRemote:FireServer("RolePlayName", rpName)
-RPBioTextRemote:FireServer("RolePlayBio", rpBio)
+-- تعديل الاسم والسيرة (الكلان)
+pcall(function()
+    local RE = game:GetService("ReplicatedStorage").RE
+    RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor", Color3.fromRGB(255, 0, 0))
+    RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor", Color3.fromRGB(0, 0, 0))
+    RE["1RPNam1eTex1t"]:FireServer("RolePlayName", "👺⚡『C҉L҉A҉N҉ Z҉E҉R҉O҉ I҉S҉ H҉E҉R҉E҉』⚡👺")
+    RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", "☆👺♧تۣۗہمۣۗہ تۣۗہفۣۗہعۣۗحيۣۗہلۣۗہ سۣۗہكۣۗهرۣۗبۣۗہتۣۗہ كۣۗہلۣۗہآنۣۗہ Z҉E҉R҉O҉♧👺☆")
+end)
