@@ -58,6 +58,7 @@ confirmKey.Font = Enum.Font.GothamBold
 confirmKey.TextScaled = true
 confirmKey.Parent = keyFrame
 -- زر ZERO الرئيسي
+
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 60, 0, 60)
 toggle.Position = UDim2.new(0.5, -30, 0, 20)
