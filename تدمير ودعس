@@ -1,16 +1,137 @@
--- [[ 💀 ZERO PHONE AUTO | STOP FIX 💀 ]] --
--- تم إصلاح مشكلة الإيقاف فقط - الأداء والقوة كما هي
+-- [[ 💀 CLAN ZERO - LUXURY EDITION 💀 ]] --
+-- المطور: Taraf69788
+-- كلمة السر: ZERO3MK
+-- القوة: ثابتة 2500
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
 
--- إعدادات القوة القصوى (لم يتم تغييرها)
+-- إعدادات القوة (ثابتة تماماً بناءً على طلبك)
 local intensity = 2500 
 local phoneAuto = false
+local passCode = "ZERO3MK"
 
--- البحث عن الهاتف
+-- [[ إنشاء الواجهة ]] --
+local MainGui = Instance.new("ScreenGui", CoreGui)
+MainGui.Name = "ZeroLuxuryUI"
+
+-- مربع تيم زيرو (للفتح والإغلاق)
+local MenuBtn = Instance.new("TextButton", MainGui)
+MenuBtn.Size = UDim2.new(0, 90, 0, 90)
+MenuBtn.Position = UDim2.new(0, 15, 0.5, -45)
+MenuBtn.Text = "تيم\nزيرو"
+MenuBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MenuBtn.TextColor3 = Color3.new(1, 1, 1)
+MenuBtn.Font = Enum.Font.GothamBold
+MenuBtn.TextSize = 18
+local btnCorner = Instance.new("UICorner", MenuBtn)
+btnCorner.CornerRadius = UDim.new(0, 12)
+
+local MenuStroke = Instance.new("UIStroke", MenuBtn)
+MenuStroke.Thickness = 3
+MenuStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+-- لوحة التحكم (البيضاء)
+local MainFrame = Instance.new("Frame", MainGui)
+MainFrame.Size = UDim2.new(0, 360, 0, 240)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -120)
+MainFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+MainFrame.Visible = false
+MainFrame.Active = true
+MainFrame.Draggable = true
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
+
+local FrameStroke = Instance.new("UIStroke", MainFrame)
+FrameStroke.Thickness = 4
+
+-- نظام RGB للحواف
+task.spawn(function()
+    while true do
+        local hue = tick() % 5 / 5
+        local color = Color3.fromHSV(hue, 1, 1)
+        MenuStroke.Color = color
+        FrameStroke.Color = color
+        task.wait()
+    end
+end)
+
+-- [[ واجهة التحقق ]] --
+local LoginFrame = Instance.new("Frame", MainFrame)
+LoginFrame.Size = UDim2.new(1, 0, 1, 0)
+LoginFrame.BackgroundTransparency = 1
+
+local PassBox = Instance.new("TextBox", LoginFrame)
+PassBox.Size = UDim2.new(0, 260, 0, 45)
+PassBox.Position = UDim2.new(0.5, -130, 0.35, 0)
+PassBox.PlaceholderText = "أدخل كلمة السر..."
+PassBox.Text = ""
+PassBox.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+PassBox.Font = Enum.Font.Gotham
+Instance.new("UICorner", PassBox)
+
+local LoadBar = Instance.new("Frame", LoginFrame)
+LoadBar.Size = UDim2.new(0, 260, 0, 12)
+LoadBar.Position = UDim2.new(0.5, -130, 0.65, 0)
+LoadBar.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+LoadBar.Visible = false
+Instance.new("UICorner", LoadBar)
+
+local Fill = Instance.new("Frame", LoadBar)
+Fill.Size = UDim2.new(0, 0, 1, 0)
+Fill.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
+Instance.new("UICorner", Fill)
+
+local StatusText = Instance.new("TextLabel", LoginFrame)
+StatusText.Size = UDim2.new(1, 0, 0, 30)
+StatusText.Position = UDim2.new(0, 0, 0.75, 0)
+StatusText.BackgroundTransparency = 1
+StatusText.Text = "بانتظار التأكيد..."
+StatusText.Font = Enum.Font.GothamBold
+
+-- [[ واجهة التدمير ]] --
+local ControlFrame = Instance.new("Frame", MainFrame)
+ControlFrame.Size = UDim2.new(1, 0, 1, 0)
+ControlFrame.BackgroundTransparency = 1
+ControlFrame.Visible = false
+
+local DestroyBtn = Instance.new("TextButton", ControlFrame)
+DestroyBtn.Size = UDim2.new(0, 220, 0, 65)
+DestroyBtn.Position = UDim2.new(0.5, -110, 0.4, 0)
+DestroyBtn.Text = "ابدأ تدمير ZERO"
+DestroyBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+DestroyBtn.TextColor3 = Color3.new(1, 1, 1)
+DestroyBtn.Font = Enum.Font.GothamBold
+DestroyBtn.TextSize = 20
+Instance.new("UICorner", DestroyBtn)
+
+-- [[ الوظائف البرمجية ]] --
+
+MenuBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
+end)
+
+PassBox.FocusLost:Connect(function(enter)
+    if enter and PassBox.Text == passCode then
+        PassBox.Visible = false
+        LoadBar.Visible = true
+        for i = 0, 100, 2 do
+            Fill.Size = UDim2.new(i/100, 0, 1, 0)
+            StatusText.Text = "جاري التحميل: " .. i .. "%"
+            task.wait(0.04)
+        end
+        StatusText.Text = "تم التفعيل بنجاح!"
+        task.wait(0.5)
+        LoginFrame.Visible = false
+        ControlFrame.Visible = true
+    else
+        PassBox.Text = ""
+        PassBox.PlaceholderText = "كلمة سر خاطئة!"
+    end
+end)
+
 local function findIphone()
     for _, v in pairs(Workspace:GetDescendants()) do
         if v.Name == "Iphone" and v:FindFirstChildOfClass("ClickDetector") then
@@ -20,11 +141,8 @@ local function findIphone()
     return nil
 end
 
--- وظيفة التدمير
 local function collectPhone()
-    -- التحقق من أن وضع التلقائي يعمل، إذا كان خطأ (false) يخرج فوراً ولا يسحب
     if not phoneAuto then return end
-    
     local phone = findIphone()
     local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     
@@ -32,11 +150,12 @@ local function collectPhone()
         if (root.Position - phone.Position).Magnitude < 20 then
             local detector = phone:FindFirstChildOfClass("ClickDetector")
             if detector then
-                for i = 1, intensity do
-                    -- زيادة التحقق لضمان التوقف الفوري حتى داخل التكرار
-                    if not phoneAuto then break end 
-                    fireclickdetector(detector, 0)
-                end
+                pcall(function()
+                    for i = 1, intensity do -- القوة 2500 كما طلبت
+                        if not phoneAuto then break end 
+                        fireclickdetector(detector, 0)
+                    end
+                end)
             end
         else
             root.CFrame = phone.CFrame + Vector3.new(0, 2, 0)
@@ -44,33 +163,17 @@ local function collectPhone()
     end
 end
 
--- الواجهة
-local gui = Instance.new("ScreenGui", game.CoreGui)
-local btn = Instance.new("TextButton", gui)
-btn.Size = UDim2.new(0, 200, 0, 50)
-btn.Position = UDim2.new(0.5, -100, 0.1, 0)
-btn.Text = "ابدأ تدمير ZERO"
-btn.BackgroundColor3 = Color3.new(1, 0, 0)
-btn.TextColor3 = Color3.new(1, 1, 1)
-
-btn.MouseButton1Click:Connect(function()
-    phoneAuto = not phoneAuto -- تغيير الحالة بين تشغيل وإيقاف
-    btn.Text = phoneAuto and "🛑 توقف" or "ابدأ تدمير ZERO"
+DestroyBtn.MouseButton1Click:Connect(function()
+    phoneAuto = not phoneAuto
+    DestroyBtn.Text = phoneAuto and "🛑 توقف" or "ابدأ تدمير ZERO"
+    DestroyBtn.BackgroundColor3 = phoneAuto and Color3.fromRGB(60, 60, 60) or Color3.fromRGB(200, 0, 0)
 end)
 
--- الحلقة الأساسية
-RunService.Heartbeat:Connect(function()
-    if phoneAuto then
-        collectPhone()
-    end
-end)
+RunService.Heartbeat:Connect(collectPhone)
 
--- تنظيف الحقيبة (لم يتم تغييره)
 task.spawn(function()
     while true do
-        if phoneAuto then
-            LocalPlayer.Backpack:ClearAllChildren()
-        end
+        if phoneAuto then LocalPlayer.Backpack:ClearAllChildren() end
         task.wait(1)
     end
 end)
