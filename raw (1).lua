@@ -288,17 +288,15 @@ local function ShowNoti(title, text, userId)
     })
 end
 
-ShowNoti("System", "مطور سكربت نعم نعم مورففن", 7491686172)
+ShowNoti("System", "7491686172", "Ahmed Hub | Clan Zero Activated")
 
 task.delay(10, function()
-    ShowNoti("System", "شرايك بتحديث الافصل ؟", 7491686172)
-end)
-
+    ShowNoti("System", "7491686172", "Welcome Ahmed (Taraf69788)")
 local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDZHUB/RedzLibV2/main/Source.lua"))()
 local Window = redzlib:MakeWindow({
-    Title = "ZERO Hub",
+    Title = "ZERO HUB",
     SubTitle = "                       |  0.1V",
-    SaveFolder = "تم التطوير"
+    SaveFolder = "ZeroHubConfig",
 })
 
 Window:AddMinimizeButton({
