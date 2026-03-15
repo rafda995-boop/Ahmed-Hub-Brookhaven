@@ -1,5 +1,5 @@
 wait(0.2)
-shared.LoaderTitle = "「 تابعني تيك يوزري تيك @morfin_090 」";
+shared.LoaderTitle = "「 AHMED HUB | CLAN ZERO 」";
 shared.LoaderKeyFrames = {
     [1] = {1, 10},
     [2] = {2, 30},
@@ -246,7 +246,7 @@ local Sound = Instance.new("Sound", game:GetService("SoundService"));
 Sound.SoundId = "rbxassetid://131004009162099";
 Sound:Play();
 
-game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", "سـكـربت الـمطـور مورفن V1.O")
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", "AHMED HUB | CLAN ZERO")
 
 local args = {
     [1] = "PickingRPNameColor",
@@ -257,7 +257,8 @@ game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eCo
 
 local args = {
     [1] = "RolePlayBio",
-    [2] ="「DARKIT HUB V0.1」"
+    [2] = "Taraf69788 | CLAN ZERO",
+
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
@@ -293,9 +294,9 @@ task.delay(10, function()
     ShowNoti("System", "شرايك بتحديث الافصل ؟", 7491686172)
 end)
 
-local redzlib = loadstring(game:HttpGet("https://pastefy.app/jt2TVdeJ/raw"))()
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDZHUB/RedzLibV2/main/Source.lua"))()
 local Window = redzlib:MakeWindow({
-    Title = "Darkit",
+    Title = "ZERO Hub",
     SubTitle = "                       |  0.1V",
     SaveFolder = "تم التطوير"
 })
@@ -313,7 +314,7 @@ local InfoTab = Window:MakeTab({ Title = "حـقوق", Icon = "rbxassetid://7710
 
 
 InfoTab:AddSection({ "معلومات السكربت" })
-InfoTab:AddParagraph({ "المالك / المطور:", "MORFIN" })
+InfoTab:AddParagraph({ "المالك / المطور:", "ZERO" })
 InfoTab:AddParagraph({"اضافات:", "مميزات قوية مثل فلنق الادمن"})
 InfoTab:AddButton({": ", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/muskarnu/Projects/main/DemoNtr.txt"))()
@@ -705,7 +706,7 @@ end
 
 TrollTab:AddSection({ "سكربت الابواب" })
 TrollTab:AddButton({
-    Name = " سكربت ابواب الجديدV2",
+    Name = " وايت سكربت ابواب الجديدV2",
     Description = "اكتب هنا اسم لاعب وشغل اذا ما صار شي فعل طيران وجمع ابواب ",
     Callback = function()
         -- Gui to
@@ -759,7 +760,7 @@ Label.BackgroundColor3 = Color3.fromRGB(139, 0, 0)
 Label.BorderSizePixel = 2
 Label.Size = UDim2.new(1, 0, 0.16, 0)
 Label.Font = Enum.Font.Nunito
-Label.Text = "المطور: Rami | BY @Sajwaad"
+Label.Text = "المطور: Rami | BY @sdf_a7"
 Label.TextColor3 = Color3.fromRGB(255, 255, 255)
 Label.TextScaled = true
 Label.TextWrapped = true
@@ -1369,7 +1370,7 @@ local function KillWithCouch()
     if bv then bv:Destroy() end
     ReplicatedStorage.RE["1Clea1rTool1s"]:FireServer("ClearAllTools")
 end
-    local PlayerSection = Troll:AddSection({ Name = "تخريب على اللاعبين" })
+    local PlayerSection = Troll:AddSection({ Name = "تخريب على اللاعبين وايت" })
 
     -- Função para obter lista de jogadores
     local function getPlayerList()
