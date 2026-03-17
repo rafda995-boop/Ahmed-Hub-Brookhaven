@@ -5134,6 +5134,44 @@ Tab:AddToggle({
             -- Desativando a funcionalidade
             BombActive = false
         end
+local hue = 0
+local rgbConnection = nil
+
+AddToggle(Main, {
+    Name = "تفعيل اسم RGB (Full)",
+    Default = false,
+    Callback = function(state)
+        _G.RGBName = state
+        if _G.RGBName then
+            -- فصل أي اتصال قديم لتجنب التكرار
+            if rgbConnection then rgbConnection:Disconnect() end
+            
+            -- بدء حلقة التغيير اللوني
+            rgbConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                if not _G.RGBName then 
+                    if rgbConnection then rgbConnection:Disconnect() end
+                    return 
+                end
+                
+                -- سرعة التغيير (0.01 تعني سرعة متوسطة)
+                hue = tick() % 5 / 5 
+                local color = Color3.fromHSV(hue, 1, 1)
+                
+                -- إرسال اللون إلى السيرفر (بروكهافن)
+                local args = {
+                    [1] = "PickingRPNameColor",
+                    [2] = color
+                }
+                game:GetService("ReplicatedStorage").RE:FindFirstChild("1RPNam1eColo1r"):FireServer(unpack(args))
+            end)
+        else
+            if rgbConnection then
+                rgbConnection:Disconnect()
+                rgbConnection = nil
+            end
+        end
+    end
+})
     end
 })
 
@@ -5157,119 +5195,6 @@ local hue = 0
 
 local SectionRGBName = Tab:AddSection({
     Name = "اسم RGB"
-})
-
-Tab:AddToggle({
-    Name = "تلوين الاسم",
-    Description = "تلوين اسمك في بروكهافن",
-    Default = false,
-    Callback = function(value)
-        isNameActive = value
-        print(value and "تم تفعيل تلوين الاسم" or "تم إيقاف تلوين الاسم")
-        
-        if value then
-            -- تشغيل تلوين الاسم
-            if nameColorConnection then
-                nameColorConnection:Disconnect()
-            end
-            
-            nameColorConnection = game:GetService("RunService").Heartbeat:Connect(function()
-                if isNameActive then
-                    hue = (hue + 0.01) % 1
-                    local color = Color3.fromHSV(hue, 1, 1)
-                    
-                    -- تغيير لون الاسم في بروكهافن
-                    local player = game:GetService("Players").LocalPlayer
-                    
-                    -- محاولة تغيير لون اسم اللاعب
-                    pcall(function()
-                        -- للشات
-                        game:GetService("Chat"):SetPlayerDisplayNameColor(player, color)
-                        
-                        -- لاسم فوق الرأس (بروكهافن)
-                        local character = player.Character
-                        if character then
-                            local head = character:FindFirstChild("Head")
-                            if head then
-                                -- البحث عن اسم اللاعب فوق الرأس
-                                local nameTag = head:FindFirstChild("NameTag") or 
-                                               head:FindFirstChild("DisplayNameTag") or
-                                               head:FindFirstChild("BillboardGui")
-                                if nameTag then
-                                    local textLabel = nameTag:FindFirstChild("TextLabel") or 
-                                                     nameTag:FindFirstChild("Name")
-                                    if textLabel then
-                                        textLabel.TextColor3 = color
-                                    end
-                                end
-                            end
-                        end
-                    end)
-                end
-            end)
-        else
-            -- إيقاف تلوين الاسم
-            if nameColorConnection then
-                nameColorConnection:Disconnect()
-                nameColorConnection = nil
-            end
-        end
-    end
-})
-
-local SectionRGBBio = Tab:AddSection({
-    Name = "RGB بايو"
-})
-
-Tab:AddToggle({
-    Name = "بايو ملون",
-    Description = "تلوين البايو في بروكهافن",
-    Default = false,
-    Callback = function(value)
-        isBioActive = value
-        print(value and "تم تفعيل تلوين البايو" or "تم إيقاف تلوين البايو")
-        
-        if value then
-            -- تشغيل تلوين البايو
-            if bioColorConnection then
-                bioColorConnection:Disconnect()
-            end
-            
-            bioColorConnection = game:GetService("RunService").Heartbeat:Connect(function()
-                if isBioActive then
-                    hue = (hue + 0.01) % 1
-                    local color = Color3.fromHSV(hue, 1, 1)
-                    
-                    -- تغيير لون البايو في بروكهافن
-                    pcall(function()
-                        -- البحث عن البايو وتلوينه
-                        local playerGui = game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui")
-                        if playerGui then
-                            -- البحث عن واجهة البايو في بروكهافن
-                            local bioFrame = playerGui:FindFirstChild("BioFrame") or
-                                            playerGui:FindFirstChild("ProfileGui") or
-                                            playerGui:FindFirstChild("NameDisplay")
-                            
-                            if bioFrame then
-                                local bioText = bioFrame:FindFirstChild("BioText") or
-                                               bioFrame:FindFirstChild("Description") or
-                                               bioFrame:FindFirstChild("TextLabel")
-                                if bioText then
-                                    bioText.TextColor3 = color
-                                end
-                            end
-                        end
-                    end)
-                end
-            end)
-        else
-            -- إيقاف تلوين البايو
-            if bioColorConnection then
-                bioColorConnection:Disconnect()
-                bioColorConnection = nil
-            end
-        end
-    end
 })
 
 local SectionSpam = Tab:AddSection({
