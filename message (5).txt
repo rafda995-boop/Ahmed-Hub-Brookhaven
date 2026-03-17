@@ -5138,6 +5138,47 @@ local hue = 0
 local rgbConnection = nil
 
 AddToggle(Main, {
+local hue = 0
+local rainbowActive = false
+local rainbowConnection
+
+AddToggle(Main, {
+  Name = "تفعيل اسم RGB مستمر",
+  Default = false,
+  Callback = function(state)
+    rainbowActive = state
+    
+    if rainbowActive then
+        -- فصل أي اتصال قديم لمنع التكرار (Lag)
+        if rainbowConnection then rainbowConnection:Disconnect() end
+        
+        -- حلقة تحديث اللون باستمرار
+        rainbowConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            if not rainbowActive then 
+                if rainbowConnection then rainbowConnection:Disconnect() end
+                return 
+            end
+            
+            -- تغيير اللون بناءً على الوقت (السرعة 2)
+            hue = (tick() % 2) / 2
+            local color = Color3.fromHSV(hue, 1, 1)
+            
+            -- إرسال اللون للسيرفر
+            local args = {
+                [1] = "PickingRPNameColor",
+                [2] = color
+            }
+            game:GetService("ReplicatedStorage").RE:FindFirstChild("1RPNam1eColo1r"):FireServer(unpack(args))
+        end)
+    else
+        -- إيقاف التأثير عند إغلاق الزر
+        if rainbowConnection then
+            rainbowConnection:Disconnect()
+            rainbowConnection = nil
+        end
+    end
+  end
+})
     Name = "تفعيل اسم RGB (Full)",
     Default = false,
     Callback = function(state)
@@ -5163,113 +5204,7 @@ AddToggle(Main, {
                     [2] = color
                 }
                 game:GetService("ReplicatedStorage").RE:FindFirstChild("1RPNam1eColo1r"):FireServer(unpack(args))
-            end)
-        else
-            if rgbConnection then
-                rgbConnection:Disconnect()
-                rgbConnection = nil
-            end
-        end
-    end
-})
-    end
-})
 
-Tab:AddParagraph({
-    "ملاحظة اللاق",
-    "انتظر حوالي شوي ليبدأ اللاق"
-})
-
-local Tab = Window:MakeTab({"الاسماء", "Paper"})
-
-local isNameActive = false
-local isBioActive = false
-local toggleActive = false
-local spamConnection = nil
-local names = {"", "", ""}
-local execSpeed = 1
-local currentNameIndex = 1
-local nameColorConnection = nil
-local bioColorConnection = nil
-local hue = 0
-
-local SectionRGBName = Tab:AddSection({
-    Name = "اسم RGB"
-})
-
-local SectionSpam = Tab:AddSection({
-    Name = "(new) سبام اسماء"
-})
-
--- إنشاء TextBox للأسماء الثلاثة
-for i = 1, 3 do
-    Tab:AddTextBox({
-        Name = "أدخل الاسم " .. i,
-        Default = "",
-        TextDisappear = false,
-        Callback = function(value)
-            names[i] = value
-            print("تم حفظ الاسم " .. i .. ": " .. value)
-        end
-    })
-end
-
--- Slider لتحديد السرعة
-Tab:AddSlider({
-    Name = "سرعة السبام",
-    Min = 1,
-    Max = 100,
-    Default = 1,
-    Increment = 0.5,
-    ValueName = "x",
-    Callback = function(value)
-        execSpeed = value
-        print("تم تغيير السرعة إلى: " .. value)
-    end
-})
-
--- Toggle لتشغيل وإيقاف السبام
-Tab:AddToggle({
-    Name = "تشغيل سبام الأسماء",
-    Description = "تبديل الأسماء تلقائياً في بروكهافن",
-    Default = false,
-    Callback = function(value)
-        toggleActive = value
-        
-        if toggleActive then
-            -- بدء السبام
-            if spamConnection then
-                spamConnection:Disconnect()
-            end
-            
-            spamConnection = game:GetService("RunService").Heartbeat:Connect(function()
-                if toggleActive then
-                    -- تصفية الأسماء الفارغة
-                    local validNames = {}
-                    for _, name in ipairs(names) do
-                        if name and name ~= "" then
-                            table.insert(validNames, name)
-                        end
-                    end
-                    
-                    if #validNames > 0 then
-                        -- تغيير الاسم في بروكهافن
-                        local nameToSet = validNames[currentNameIndex]
-                        print("تغيير الاسم إلى: " .. nameToSet)
-                        
-                        -- محاولة تغيير الاسم بعدة طرق
-                        pcall(function()
-                            local player = game:GetService("Players").LocalPlayer
-                            
-                            -- الطريقة 1: تغيير DisplayName
-                            player.DisplayName = nameToSet
-                            
-                            -- الطريقة 2: تحديث الاسم في الشخصية
-                            local character = player.Character
-                            if character then
-                                -- تحديث اسم الشخصية
-                                character.Name = nameToSet
-                                
                                 -- تحديث الاسم في واجهة المستخدم
                                 local humanoid = character:FindFirstChild("Humanoid")
                                 if humanoid then
