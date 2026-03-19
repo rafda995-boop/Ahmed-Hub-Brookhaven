@@ -10,7 +10,9 @@ pcall(function()
 	getgenv().napoleonLoaded = true
 end)
 
-local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
+local MyKey = "ZERO3MK"
+
+--local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 
 local repo = "https://raw.githubusercontent.com/raydjs/Obsidian/main/"
 local discord_link = "discord.gg/bWzCFPk83g"
@@ -147,24 +149,16 @@ Tabs.Key:AddLabel({
 })
 
 Tabs.Key:AddKeyBox(function(_, ReceivedKey)
-	local status = api.check_key(ReceivedKey)
-	
-	if status.code == "KEY_VALID" then
-		script_key = script_key or ReceivedKey
-		writefile(keyFile, script_key)
-		execute(script_key)
-		Library:Notify("SUCCESS!", 4)
-	elseif status.code == "KEY_HWID_LOCKED" then
-		Library:Notify("Key linked to a different HWID. Please reset it using our bot")
-	elseif status.code == "KEY_INCORRECT" then
-		forceDel()
-		Library:Notify("Key is wrong or deleted")
-	elseif status.code == "SCRIPT_ID_INCORRECT" then
-		Library:Notify("Script does not exist")
-	else
-		forceDel()
-		Library:Notify("Error", 4)
-	end
+    -- التحقق من المفتاح الخاص بك ZERO3MK
+    if ReceivedKey == MyKey then
+        Library:Notify("المفتاح صحيح! أهلاً بك يا Ahmed", 4)
+        writefile(keyFile, ReceivedKey) -- حفظ المفتاح لعدم إدخاله مرة أخرى
+        task.wait(1)
+        execute(ReceivedKey) -- تشغيل السكربت
+    else
+        -- إذا كان المفتاح خطأ
+        Library:Notify("المفتاح الذي أدخلته غير صحيح!", 4)
+    end
 end)
 
 Tabs.Key:AddButton({
