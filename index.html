@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دراما شو - Taraf69788</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* هنا نضع كود الـ CSS */
+        :root {
+            --primary-color: #ff2d55;
+            --bg-black: #010101;
+            --text-white: #ffffff;
+            --nav-bg: #000000;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: var(--bg-black); color: var(--text-white); overflow: hidden; }
+        .app-container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        .video-feed { height: calc(100vh - 70px); overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .video-feed::-webkit-scrollbar { display: none; }
+        .video-card { position: relative; width: 100%; height: 100%; scroll-snap-align: start; background: #000; display: flex; align-items: center; justify-content: center; }
+        .video-player { width: 100%; height: 100%; object-fit: cover; }
+        .side-actions { position: absolute; right: 15px; bottom: 100px; display: flex; flex-direction: column; gap: 20px; align-items: center; z-index: 10; }
+        .action-btn { display: flex; flex-direction: column; align-items: center; font-size: 13px; cursor: pointer; }
+        .action-btn i { font-size: 28px; margin-bottom: 5px; }
+        .video-info { position: absolute; bottom: 20px; left: 15px; right: 70px; text-align: right; z-index: 10; }
+        .bottom-nav { height: 70px; background: var(--nav-bg); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #888; }
+        .nav-item.active { color: white; }
+        .add-btn i { font-size: 30px; color: var(--primary-color); }
+        .liked { color: var(--primary-color) !important; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <main id="video-feed" class="video-feed"></main>
+        <nav class="bottom-nav">
+            <div class="nav-item active"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item"><i class="fas fa-search"></i><span>اكتشف</span></div>
+            <div class="nav-item add-btn"><i class="fas fa-plus"></i></div>
+            <div class="nav-item"><i class="fas fa-heart"></i><span>المفضلة</span></div>
+            <div class="nav-item"><i class="fas fa-user"></i><span>حسابي</span></div>
+        </nav>
+    </div>
+
+    <script>
+        // هنا نضع كود الـ JavaScript
+        const dramaData = [
+            { id: 1, title: "@Ahmed_Dev", description: "دراما قصيرة - الحلقة 1", url: "https://www.w3schools.com/html/mov_bbb.mp4", likes: "1.2M" },
+            { id: 2, title: "@Clan_Zero", description: "مغامرة جديدة 🎬 #VOID", url: "https://www.w3schools.com/html/movie.mp4", likes: "850K" }
+        ];
+
+        const videoFeed = document.getElementById('video-feed');
+
+        function createVideoCard(video) {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.innerHTML = `
+                <video class="video-player" loop playsinline>
+                    <source src="${video.url}" type="video/mp4">
+                </video>
+                <div class="side-actions">
+                    <div class="action-btn" onclick="this.querySelector('i').classList.toggle('liked')">
+                        <i class="fas fa-heart"></i><span>${video.likes}</span>
+                    </div>
+                    <div class="action-btn"><i class="fas fa-comment-dots"></i><span>4.5K</span></div>
+                    <div class="action-btn"><i class="fas fa-share"></i><span>مشاركة</span></div>
+                </div>
+                <div class="video-info"><h3>${video.title}</h3><p>${video.description}</p></div>
+            `;
+            card.addEventListener('click', () => {
+                const v = card.querySelector('video');
+                v.paused ? v.play() : v.pause();
+            });
+            return card;
+        }
+
+        dramaData.forEach(item => videoFeed.appendChild(createVideoCard(item)));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (entry.isIntersecting) { video.play().catch(() => {}); } 
+                else { video.pause(); video.currentTime = 0; }
+            });
+        }, { threshold: 0.7 });
+
+        document.querySelectorAll('.video-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
