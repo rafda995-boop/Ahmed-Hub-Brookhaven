@@ -1,9 +1,9 @@
 -- 💀 ZERO Phone Auto + Advanced Anti-Lag (Brookhaven Edition) 💀
-local Players = game:GetService("Players")
+local Players = game:GetService("Players")fffgf
 local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
-
+end
 -- مجلد التخزين المؤقت للشخصية
 local hiddenCharacterFolder = Instance.new("Folder")
 hiddenCharacterFolder.Name = "ZERO_Hidden_Storage"
