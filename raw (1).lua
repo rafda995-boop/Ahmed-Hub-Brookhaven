@@ -1,5 +1,5 @@
 wait(0.2)
-shared.LoaderTitle = "「 AHMED HUB | CLAN ZERO 」";
+shared.LoaderTitle = "「 AHMED HUB | CLAN ZERO 」";fffff
 shared.LoaderKeyFrames = {
     [1] = {1, 10},
     [2] = {2, 30},
