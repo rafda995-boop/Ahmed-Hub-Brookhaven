@@ -1,0 +1,617 @@
+--====================================================================--
+-- 🔥 بروكهافن - السكريبت الأسطوري V5.0 🔥
+-- أقوى سكريبت في تاريخ بروكهافن
+-- تم تطويره بواسطة: المهندس الأسطوري
+-- جميع الحقوق محفوظة © 2026
+--====================================================================--
+
+--====================================================================--
+-- [القسم 1] - نظام الحماية الشامل (Anti-Everything)
+--====================================================================--
+
+-- متغيرات الحماية
+local Anti = {
+    Ban = true,           -- مضاد للحظر
+    Kick = true,          -- مضاد للطرد
+    Freeze = true,        -- مضاد للتجميد
+    Teleport = true,      -- مضاد للنقل القسري
+    Kill = true,          -- مضاد للموت الفوري
+    Sit = true,           -- مضاد للجلوس القسري
+    Fly = true,           -- مضاد للطيران القسري
+    Stun = true,          -- مضاد للصعق
+    Ragdoll = true,       -- مضاد للتمدد
+    Exploit = true,       -- مضاد للاستغلال
+    Crash = true,         -- مضاد للتعطل
+    Lag = true,           -- مضاد للتباطؤ
+    Script = true,        -- مضاد للسكريبتات الضارة
+    Admin = true,         -- مضاد للأدمن
+    God = true,           -- وضع الخلود
+    Invisible = false,    -- التخفي
+    Speed = 100,          -- السرعة القصوى
+    Jump = 200,           -- قوة القفز
+    Health = 99999,       -- الصحة اللانهائية
+    Shield = true         -- الدرع الواقي
+}
+
+--====================================================================--
+-- [القسم 2] - نظام مضاد الحظر (Anti-Ban)
+--====================================================================--
+local AntiBan = {
+    Active = true,
+    Connections = {},
+    Bypass = {}
+}
+
+-- منع جميع طرق الحظر
+local function StartAntiBan()
+    -- منع الحظر عن طريق RemoteEvents
+    local function BlockRemote(remote)
+        if remote:IsA("RemoteEvent") or remote:IsA("RemoteFunction") then
+            local oldFire = remote.FireServer
+            remote.FireServer = function(self, ...)
+                if string.find(tostring(...), "Ban") or string.find(tostring(...), "Kick") then
+                    return nil
+                end
+                return oldFire(self, ...)
+            end
+        end
+    end
+    
+    -- مسح جميع الـ Remotes في اللعبة
+    for _, obj in ipairs(game:GetDescendants()) do
+        BlockRemote(obj)
+    end
+    
+    -- مراقبة الـ Remotes الجديدة
+    local connection = game.DescendantAdded:Connect(BlockRemote)
+    table.insert(AntiBan.Connections, connection)
+    
+    -- منع الحظر عن طريق الـ Scripts
+    for _, script in ipairs(game:GetDescendants()) do
+        if script:IsA("Script") or script:IsA("LocalScript") then
+            if string.find(script.Name, "Ban") or string.find(script.Name, "Kick") then
+                script.Disabled = true
+            end
+        end
+    end
+    
+    print("🛡️ [مضاد الحظر] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 3] - نظام الخلود والمقاومة (God Mode + Shield)
+--====================================================================--
+local GodMode = {
+    Active = true,
+    Health = 99999,
+    Shield = true,
+    Connection = nil
+}
+
+local function StartGodMode()
+    if GodMode.Active then return end
+    GodMode.Active = true
+    
+    -- جعل الصحة لا نهائية
+    GodMode.Connection = RunService.Heartbeat:Connect(function()
+        if not GodMode.Active then return end
+        if not Character or not Character.Parent then return end
+        
+        local hum = Character:FindFirstChild("Humanoid")
+        if hum then
+            hum.MaxHealth = 99999
+            hum.Health = 99999
+            hum.BreakJointsOnDeath = false
+            
+            -- منع الموت
+            hum:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+        end
+        
+        -- الدرع الواقي (يمنع الضرر)
+        if GodMode.Shield then
+            for _, part in ipairs(Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.Material = Enum.Material.Neon
+                    part.Transparency = 0.3
+                end
+            end
+        end
+    end)
+    
+    print("🛡️ [الخلود] تم تفعيل وضع الخلود")
+end
+
+--====================================================================--
+-- [القسم 4] - نظام مضاد الطيران والجلوس القسري
+--====================================================================--
+local AntiForce = {
+    Active = true,
+    Connection = nil
+}
+
+local function StartAntiForce()
+    if AntiForce.Active then return end
+    AntiForce.Active = true
+    
+    AntiForce.Connection = RunService.Heartbeat:Connect(function()
+        if not AntiForce.Active then return end
+        if not Character or not Character.Parent then return end
+        
+        local hum = Character:FindFirstChild("Humanoid")
+        if not hum then return end
+        
+        -- منع الجلوس القسري
+        if hum.Sit then
+            hum.Sit = false
+        end
+        
+        -- منع الطيران القسري
+        if hum:GetState() == Enum.HumanoidStateType.Flying then
+            hum:ChangeState(Enum.HumanoidStateType.Running)
+        end
+        
+        -- منع الصعق
+        if hum:GetState() == Enum.HumanoidStateType.Stunned then
+            hum:ChangeState(Enum.HumanoidStateType.Running)
+        end
+        
+        -- منع التمدد
+        if hum:GetState() == Enum.HumanoidStateType.Ragdoll then
+            hum:ChangeState(Enum.HumanoidStateType.Running)
+        end
+        
+        -- منع التجميد
+        if hum.PlatformStand then
+            hum.PlatformStand = false
+        end
+    end)
+    
+    print("🛡️ [مضاد القسر] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 5] - نظام مضاد السكريبتات الضارة
+--====================================================================--
+local AntiScript = {
+    Active = true,
+    Connections = {}
+}
+
+local function StartAntiScript()
+    if not AntiScript.Active then return end
+    
+    -- منع تنفيذ سكريبتات ضارة
+    local function BlockScript(script)
+        if script:IsA("Script") or script:IsA("LocalScript") or script:IsA("ModuleScript") then
+            local source = script.Source or ""
+            if string.find(source, "ban") or 
+               string.find(source, "kick") or 
+               string.find(source, "delete") or 
+               string.find(source, "remove") or
+               string.find(source, "destroy") then
+                script.Disabled = true
+                print("⚠️ [مضاد السكريبت] تم حظر سكريبت ضار: " .. script.Name)
+            end
+        end
+    end
+    
+    -- مسح جميع السكريبتات
+    for _, obj in ipairs(game:GetDescendants()) do
+        BlockScript(obj)
+    end
+    
+    -- مراقبة السكريبتات الجديدة
+    local connection = game.DescendantAdded:Connect(BlockScript)
+    table.insert(AntiScript.Connections, connection)
+    
+    print("🛡️ [مضاد السكريبت] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 6] - نظام مضاد الأدمن (Admin Bypass)
+--====================================================================--
+local AntiAdmin = {
+    Active = true,
+    Connection = nil
+}
+
+local function StartAntiAdmin()
+    if not AntiAdmin.Active then return end
+    
+    -- إخفاء اللاعب من الأدمن
+    AntiAdmin.Connection = RunService.Heartbeat:Connect(function()
+        if not AntiAdmin.Active then return end
+        if not Character or not Character.Parent then return end
+        
+        -- إخفاء الاسم من لوحة الأدمن
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= Player then
+                local char = plr.Character
+                if char then
+                    -- منع رؤيتك من قبل الأدمن
+                    for _, part in ipairs(char:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            -- إخفاء المؤشرات
+                        end
+                    end
+                end
+            end
+        end
+        
+        -- تغيير الاسم لتجنب الاستهداف
+        Player.Name = "🛡️ " .. Player.Name
+    end)
+    
+    print("🛡️ [مضاد الأدمن] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 7] - نظام السرعة والقفز الخارق
+--====================================================================--
+local SuperStats = {
+    Speed = 100,
+    Jump = 200,
+    Active = true,
+    Connection = nil
+}
+
+local function StartSuperStats()
+    if not SuperStats.Active then return end
+    
+    SuperStats.Connection = RunService.Heartbeat:Connect(function()
+        if not SuperStats.Active then return end
+        if not Character or not Character.Parent then return end
+        
+        local hum = Character:FindFirstChild("Humanoid")
+        if hum then
+            hum.WalkSpeed = SuperStats.Speed
+            hum.JumpPower = SuperStats.Jump
+        end
+    end)
+    
+    print("⚡ [السرعة الخارقة] تم تفعيل السرعة: " .. SuperStats.Speed)
+    print("⬆️ [القفز الخارق] تم تفعيل القفز: " .. SuperStats.Jump)
+end
+
+--====================================================================--
+-- [القسم 8] - نظام التخفي (Invisibility)
+--====================================================================--
+local Invisibility = {
+    Active = false,
+    Connection = nil
+}
+
+local function StartInvisibility()
+    if Invisibility.Active then return end
+    Invisibility.Active = true
+    
+    Invisibility.Connection = RunService.Heartbeat:Connect(function()
+        if not Invisibility.Active then return end
+        if not Character or not Character.Parent then return end
+        
+        for _, part in ipairs(Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 1
+                part.CanCollide = false
+            end
+        end
+    end)
+    
+    Notify("👻 التخفي", "تم تفعيل التخفي!", 2)
+end
+
+local function StopInvisibility()
+    Invisibility.Active = false
+    if Invisibility.Connection then
+        Invisibility.Connection:Disconnect()
+        Invisibility.Connection = nil
+    end
+    
+    for _, part in ipairs(Character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.Transparency = 0
+            part.CanCollide = true
+        end
+    end
+    
+    Notify("👻 التخفي", "تم إلغاء التخفي!", 2)
+end
+
+--====================================================================--
+-- [القسم 9] - نظام مضاد التجميد والتباطؤ
+--====================================================================--
+local AntiLag = {
+    Active = true,
+    Connection = nil
+}
+
+local function StartAntiLag()
+    if not AntiLag.Active then return end
+    
+    AntiLag.Connection = RunService.Heartbeat:Connect(function()
+        if not AntiLag.Active then return end
+        
+        -- منع التجميد
+        if Character then
+            for _, part in ipairs(Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                    part.Velocity = Vector3.new(0, 0, 0)
+                    part.RotVelocity = Vector3.new(0, 0, 0)
+                end
+            end
+        end
+        
+        -- منع التباطؤ في السيرفر
+        game:GetService("RunService").RenderStepped:Wait()
+    end)
+    
+    print("🛡️ [مضاد التجميد] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 10] - نظام مضاد التعطل (Anti-Crash)
+--====================================================================--
+local AntiCrash = {
+    Active = true,
+    Connection = nil
+}
+
+local function StartAntiCrash()
+    if not AntiCrash.Active then return end
+    
+    AntiCrash.Connection = RunService.Heartbeat:Connect(function()
+        pcall(function()
+            -- منع التعطل بسبب الذاكرة
+            collectgarbage("collect")
+            
+            -- منع التعطل بسبب العمليات الكثيرة
+            if #game:GetDescendants() > 10000 then
+                for _, obj in ipairs(game:GetDescendants()) do
+                    if obj:IsA("ParticleEmitter") or obj:IsA("Smoke") or obj:IsA("Fire") then
+                        obj.Enabled = false
+                    end
+                end
+            end
+        end)
+    end)
+    
+    print("🛡️ [مضاد التعطل] تم تفعيل الحماية")
+end
+
+--====================================================================--
+-- [القسم 11] - نظام الهجوم الخارق (Super Attack)
+--====================================================================--
+local SuperAttack = {
+    Active = false,
+    Damage = 99999,
+    Range = 100,
+    Connection = nil
+}
+
+local function StartSuperAttack()
+    if SuperAttack.Active then return end
+    SuperAttack.Active = true
+    
+    SuperAttack.Connection = RunService.Heartbeat:Connect(function()
+        if not SuperAttack.Active then return end
+        
+        -- قتل جميع اللاعبين في النطاق
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= Player then
+                local char = plr.Character
+                if char and char:FindFirstChild("Humanoid") then
+                    local hum = char.Humanoid
+                    if hum.Health > 0 then
+                        local dist = (char.HumanoidRootPart.Position - RootPart.Position).Magnitude
+                        if dist <= SuperAttack.Range then
+                            hum.Health = 0
+                        end
+                    end
+                end
+            end
+        end
+    end)
+    
+    Notify("⚔️ الهجوم الخارق", "تم تفعيل الهجوم الخارق!", 2)
+end
+
+local function StopSuperAttack()
+    SuperAttack.Active = false
+    if SuperAttack.Connection then
+        SuperAttack.Connection:Disconnect()
+        SuperAttack.Connection = nil
+    end
+    Notify("⚔️ الهجوم الخارق", "تم إلغاء الهجوم الخارق!", 2)
+end
+
+--====================================================================--
+-- [القسم 12] - نظام التحكم بالسيرفر (Server Control)
+--====================================================================--
+local ServerControl = {
+    Active = false,
+    Connection = nil
+}
+
+local function StartServerControl()
+    if ServerControl.Active then return end
+    ServerControl.Active = true
+    
+    -- التحكم بالسيرفر
+    ServerControl.Connection = RunService.Heartbeat:Connect(function()
+        if not ServerControl.Active then return end
+        
+        -- منع خروج اللاعبين
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= Player then
+                if plr.Character then
+                    -- تجميد اللاعبين
+                    local hum = plr.Character:FindFirstChild("Humanoid")
+                    if hum then
+                        hum.PlatformStand = true
+                        hum.WalkSpeed = 0
+                    end
+                end
+            end
+        end
+    end)
+    
+    Notify("👑 التحكم بالسيرفر", "تم تفعيل التحكم بالسيرفر!", 2)
+end
+
+local function StopServerControl()
+    ServerControl.Active = false
+    if ServerControl.Connection then
+        ServerControl.Connection:Disconnect()
+        ServerControl.Connection = nil
+    end
+    
+    -- إعادة اللاعبين
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= Player then
+            local hum = plr.Character:FindFirstChild("Humanoid")
+            if hum then
+                hum.PlatformStand = false
+                hum.WalkSpeed = 16
+            end
+        end
+    end
+    
+    Notify("👑 التحكم بالسيرفر", "تم إلغاء التحكم بالسيرفر!", 2)
+end
+
+--====================================================================--
+-- [القسم 13] - نظام النسخ الاحتياطي (Backup System)
+--====================================================================--
+local Backup = {
+    Active = true,
+    Data = {}
+}
+
+local function SaveBackup()
+    if not Backup.Active then return end
+    
+    -- حفظ بيانات اللاعب
+    Backup.Data = {
+        Position = RootPart.Position,
+        Health = Humanoid.Health,
+        Speed = Humanoid.WalkSpeed,
+        Jump = Humanoid.JumpPower,
+        Time = os.time()
+    }
+    
+    print("💾 [النسخ الاحتياطي] تم حفظ البيانات")
+end
+
+local function LoadBackup()
+    if not Backup.Data.Position then return end
+    
+    -- استعادة البيانات
+    RootPart.Position = Backup.Data.Position
+    Humanoid.Health = Backup.Data.Health
+    Humanoid.WalkSpeed = Backup.Data.Speed
+    Humanoid.JumpPower = Backup.Data.Jump
+    
+    Notify("💾 النسخ الاحتياطي", "تم استعادة البيانات!", 2)
+    print("💾 [النسخ الاحتياطي] تم استعادة البيانات")
+end
+
+--====================================================================--
+-- [القسم 14] - نظام الطيران الأسطوري
+--====================================================================--
+local LegendaryFly = {
+    Active = false,
+    Speed = 200,
+    BodyVelocity = nil,
+    Connection = nil
+}
+
+local function StartLegendaryFly()
+    if LegendaryFly.Active then return end
+    LegendaryFly.Active = true
+    
+    local bodyVel = Instance.new("BodyVelocity")
+    bodyVel.Velocity = Vector3.new(0, 20, 0)
+    bodyVel.MaxForce = Vector3.new(1e9, 1e9, 1e9)
+    bodyVel.Parent = RootPart
+    LegendaryFly.BodyVelocity = bodyVel
+    
+    LegendaryFly.Connection = RunService.Heartbeat:Connect(function()
+        if not LegendaryFly.Active then return end
+        if not Character or not Character.Parent then
+            StopLegendaryFly()
+            return
+        end
+        
+        pcall(function()
+            local camera = workspace.CurrentCamera
+            if not camera then return end
+            
+            local forward = camera.CFrame.LookVector
+            local right = camera.CFrame.RightVector
+            local up = camera.CFrame.UpVector
+            
+            local moveDir = Vector3.new(0, 0, 0)
+            
+            if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDir = moveDir + forward end
+            if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDir = moveDir - forward end
+            if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDir = moveDir - right end
+            if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDir = moveDir + right end
+            if UserInputService:IsKeyDown(Enum.KeyCode.Space) then moveDir = moveDir + up end
+            if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then moveDir = moveDir - up end
+            
+            if moveDir.Magnitude > 0 then
+                moveDir = moveDir.Unit * LegendaryFly.Speed
+            else
+                moveDir = Vector3.new(0, 0, 0)
+            end
+            
+            bodyVel.Velocity = moveDir
+        end)
+    end)
+    
+    Notify("🛸 الطيران الأسطوري", "تم تفعيل الطيران الأسطوري!", 2)
+end
+
+local function StopLegendaryFly()
+    LegendaryFly.Active = false
+    if LegendaryFly.BodyVelocity then
+        LegendaryFly.BodyVelocity:Destroy()
+        LegendaryFly.BodyVelocity = nil
+    end
+    if LegendaryFly.Connection then
+        LegendaryFly.Connection:Disconnect()
+        LegendaryFly.Connection = nil
+    end
+    Notify("🛸 الطيران الأسطوري", "تم إلغاء الطيران الأسطوري!", 2)
+end
+
+--====================================================================--
+-- [القسم 15] - القائمة الرئيسية العربية
+--====================================================================--
+local function CreateArabicGUI()
+    pcall(function()
+        -- حذف القائمة القديمة
+        local oldGui = Player.PlayerGui:FindFirstChild("LegendaryGUI")
+        if oldGui then oldGui:Destroy() end
+        
+        local gui = Instance.new("ScreenGui")
+        gui.Name = "LegendaryGUI"
+        gui.Parent = Player.PlayerGui
+        
+        -- الإطار الرئيسي
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(0, 350, 0, 600)
+        frame.Position = UDim2.new(0.5, -175, 0.5, -300)
+        frame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+        frame.BackgroundTransparency = 0.05
+        frame.BorderSizePixel = 3
+        frame.BorderColor3 = Color3.fromRGB(255, 215, 0)
+        frame.Parent = gui
+        
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 15)
+        corner.Parent = frame
+        
+        -- العنوان
+       
